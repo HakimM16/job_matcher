@@ -25,13 +25,10 @@
   }
 }
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+
+/* Override app background color */
+body {
+  background-color: #282c34;
 }
 
 .App {

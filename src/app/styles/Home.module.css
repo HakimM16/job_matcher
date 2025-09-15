@@ -3,6 +3,7 @@
   color: white;
   display: flex;
   margin: 0;
+  background-color: #1c2633;
 }
 
 .container {
@@ -16,11 +17,15 @@
 
 .logoBox {
   padding-top: 50px;
-  height: 120px;
+  height: auto;
+  display: flex;
+  justify-content: center;
 }
 
 .logoBox img {
   margin: auto;
+  max-width: 100%;
+  height: auto;
 }
 
 .content {
@@ -31,6 +36,11 @@
 }
 
 .centeredContent {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
 }
 
 .footer {

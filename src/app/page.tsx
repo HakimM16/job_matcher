@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import ResumeAnalyser from './components/ResumeAnalyser';
 import styles from './styles/Home.module.css';
+import Logo from './logo.png';
 
 export default function Home() {
   return (
@@ -11,12 +12,14 @@ export default function Home() {
         <div className={styles.content}>
           <div className={styles.centeredContent}>
             <div className={styles.logoBox}>
-              <Image src='/logo.png' alt='InterviewGPT logo' width='400' height='75' />
+              <Image src={Logo} alt='InterviewGPT logo' width={400} height={200} />
             </div>
-            <ResumeAnalyser />
+            <div>
+              <ResumeAnalyser />
+            </div>
           </div>
         </div>
-        <p className={styles.footer}>Built by <a href='https://www.linkedin.com/in/hakim-mabike-643848214' target='_blank'>Zaurbek Stark</a></p>
+        <p className={styles.footer}>Built by <a href='https://www.linkedin.com/in/hakim-mabike-643848214' target='_blank'>Hakim Mabike</a></p>
       </div>
     </main>
   )

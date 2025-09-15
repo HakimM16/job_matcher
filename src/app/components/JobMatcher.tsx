@@ -13,35 +13,38 @@ interface JobMatcherProps {
 }
 
 const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
-  // Extract the estimated worth, explanation, and improvements from the analysis result
-  const estimatedWorthMatch = jobMatch.match(/<Estimated Worth>\$(.+?)<\/Estimated Worth>/);
-  const explanationMatch = jobMatch.match(/<Explanation>([\s\S]*?)<\/Explanation>/);
-  const improvementsMatch = jobMatch.match(/<Improvements>([\s\S]*?)<\/Improvements>/);
+  // Extract new fields from the analysis result
+  const suggestedCareerMatch = jobMatch.match(/<Suggested Career>([\s\S]*?)<\/Suggested Career>/);
+  const skillGapMatch = jobMatch.match(/<Skill Gap Analysis>([\s\S]*?)<\/Skill Gap Analysis>/);
+  const salaryPredictionsMatch = jobMatch.match(/<Salary Predictions>([\s\S]*?)<\/Salary Predictions>/);
+  const careerPathMatch = jobMatch.match(/<Career Path Suggestions>([\s\S]*?)<\/Career Path Suggestions>/);
 
-  const estimatedWorth = estimatedWorthMatch ? estimatedWorthMatch[1] : 'N/A';
-  const explanation = explanationMatch ? explanationMatch[1] : '';
-  const improvements = improvementsMatch ? improvementsMatch[1] : '';
+  const suggestedCareer = suggestedCareerMatch ? suggestedCareerMatch[1].trim() : 'Not determined';
+  const skillGap = skillGapMatch ? skillGapMatch[1] : '';
+  const salaryPredictions = salaryPredictionsMatch ? salaryPredictionsMatch[1] : '';
+  const careerPath = careerPathMatch ? careerPathMatch[1] : '';
 
-  // Extract the list items from the explanation and improvements
-  const explanationItems = explanation.match(/<li>(.+?)<\/li>/g);
-  const improvementItems = improvements.match(/<li>(.+?)<\/li>/g);
+  // Extract list items
+  const skillGapItems = skillGap.match(/<li>(.+?)<\/li>/g);
+  const salaryPredictionItems = salaryPredictions.match(/<li>(.+?)<\/li>/g);
+  const careerPathItems = careerPath.match(/<li>(.+?)<\/li>/g);
 
   return (
     <div className={styles.container}>
-      <div className={styles.worth}>${estimatedWorth}</div>
-      <p className={styles.subtitle}>Resume worth</p>
+      <div className={styles.worth}>{suggestedCareer}</div>
+      <p className={styles.subtitle}>Suggested career</p>
       
       <div className={styles.content}>
         <div className={styles.column}>
           <Card className="h-full">
             <CardHeader>
-              <CardTitle>Key Factors</CardTitle>
-              <CardDescription>What contributes to your worth</CardDescription>
+              <CardTitle>Skill Gap Analysis</CardTitle>
+              <CardDescription>What to level up next</CardDescription>
             </CardHeader>
             <CardContent>
-              {explanationItems && (
+              {skillGapItems && (
                 <ul className={styles.list}>
-                  {explanationItems.map((item, index) => (
+                  {skillGapItems.map((item, index) => (
                     <li key={index} className={styles.listItem}>
                       {item.replace(/<\/?li>/g, '')}
                     </li>
@@ -54,13 +57,32 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
         <div className={styles.column}>
           <Card className="h-full">
             <CardHeader>
-              <CardTitle>Improvements</CardTitle>
-              <CardDescription>How to worth more</CardDescription>
+              <CardTitle>Salary Predictions</CardTitle>
+              <CardDescription>Market outlook by level</CardDescription>
             </CardHeader>
             <CardContent>
-              {improvementItems && (
+              {salaryPredictionItems && (
                 <ul className={styles.list}>
-                  {improvementItems.map((item, index) => (
+                  {salaryPredictionItems.map((item, index) => (
+                    <li key={index} className={styles.listItem}>
+                      {item.replace(/<\/?li>/g, '')}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </CardContent>
+          </Card>
+        </div>
+        <div className={styles.column}>
+          <Card className="h-full">
+            <CardHeader>
+              <CardTitle>Career Path Suggestions</CardTitle>
+              <CardDescription>Your next smart moves</CardDescription>
+            </CardHeader>
+            <CardContent>
+              {careerPathItems && (
+                <ul className={styles.list}>
+                  {careerPathItems.map((item, index) => (
                     <li key={index} className={styles.listItem}>
                       {item.replace(/<\/?li>/g, '')}
                     </li>
