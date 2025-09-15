@@ -1,0 +1,1 @@
+// This component handles the resume analysis functionality.

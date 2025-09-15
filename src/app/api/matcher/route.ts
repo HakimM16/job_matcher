@@ -1,0 +1,1 @@
+// This is where the mistral api route is defined.
