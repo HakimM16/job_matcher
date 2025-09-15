@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import ResumeAnalyserApp from './components/ResumeAnalyser';
+import ResumeAnalyser from './components/ResumeAnalyser';
 import styles from './styles/Home.module.css';
 
 export default function Home() {
@@ -13,7 +13,7 @@ export default function Home() {
             <div className={styles.logoBox}>
               <Image src='/logo.png' alt='InterviewGPT logo' width='400' height='75' />
             </div>
-            <ResumeAnalyserApp />
+            <ResumeAnalyser />
           </div>
         </div>
         <p className={styles.footer}>Built by <a href='https://www.linkedin.com/in/hakim-mabike-643848214' target='_blank'>Zaurbek Stark</a></p>
