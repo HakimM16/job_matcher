@@ -10,7 +10,7 @@ const ResumeAnalyser = () => {
   const [isLoadingResume, setIsLoadingResume] = useState(false);
   const [resumeText, setResumeText] = useState<string>('');
   const { completion, isLoading, complete, error } = useCompletion({
-    api: '/api/resume',
+    api: '/api/matcher',
   });
 
   useEffect(() => {

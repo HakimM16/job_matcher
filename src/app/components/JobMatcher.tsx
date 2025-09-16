@@ -29,6 +29,8 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
   const salaryPredictionItems = salaryPredictions.match(/<li>(.+?)<\/li>/g);
   const careerPathItems = careerPath.match(/<li>(.+?)<\/li>/g);
 
+  console.log('Job Match Data:', { suggestedCareer, skillGapItems, salaryPredictionItems, careerPathItems });
+
   return (
     <div className={styles.container}>
       <div className={styles.worth}>{suggestedCareer}</div>
