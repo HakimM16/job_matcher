@@ -1,6 +1,7 @@
 // This is where the mistral api route is defined.
 import MistralClient from '@mistralai/mistralai';
 import { MistralStream, StreamingTextResponse } from 'ai';
+import { ComprehensiveAnalysis } from '@/types/analysis';
  
 const mistral = new MistralClient(process.env.MISTRAL_API_KEY || '');
  
@@ -45,46 +46,221 @@ export async function POST(req: Request) {
     model: 'open-mistral-7b',
     messages: [{ 
       role: 'user',
-      content: `CONTEXT: You are a career coach and labor market analyst.
-You are funny and witty, with an edge. You talk like a mentor hyping the user up.
-Tailor advice to the candidate's profile and keep it encouraging and concrete.
+      content: `CONTEXT: You are a comprehensive career coach, labor market analyst, and professional development expert.
+You provide detailed, actionable career guidance with personality, market insights, and concrete next steps.
+You are encouraging, witty, and practical - like a mentor who truly wants to see someone succeed.
 -------
 TASK: 
-- Analyze the resume below.
-- Output: suggested career, skill gap analysis, salary predictions, and career path suggestions.
-- Keep bullets concise (<= 80 chars each) and practical.
-- Write in a witty, upbeat tone with 1-2 light metaphors max.
-- Always speak to the user in 'you'.
-- With suggested career, give one clear job title that fits the resume best.
+Analyze the resume below and provide a comprehensive career analysis including:
+
+1. CORE ANALYSIS: Suggested career, overall match percentage, key strengths
+2. ENHANCED INSIGHTS: Market demand, cultural fit, alternative paths, learning resources
+3. ACTIONABLE GUIDANCE: Personalized action plan, networking opportunities, resume feedback
+4. MOTIVATION: Positive reinforcement and clear next steps
+
+Keep everything practical, encouraging, and specific to the candidate's profile.
 -------
 RESUME:
 ${prompt}
 -------
-OUTPUT FORMAT: 
-<Suggested Career>...</Suggested Career>
-<Skill Gap Analysis>
-   <ul>
-      <li>...</li>
-      <li>...</li>
-      <li>...</li>
-      ...
-   </ul>
-</Skill Gap Analysis>
-<Salary Predictions>
-   <ul>
-      <li>Entry: £...</li>
-      <li>Mid: £...</li>
-      <li>Senior: £...</li>
-   </ul>
-</Salary Predictions>
-<Career Path Suggestions>
-   <ul>
-      <li>...</li>
-      <li>...</li>
-      <li>...</li>
-      ...
-   </ul>
-</Career Path Suggestions>`
+OUTPUT FORMAT (STRICT JSON):
+{
+  "suggestedCareer": "specific job title",
+  "matchPercentage": {
+    "overall": 85,
+    "technical": 80,
+    "experience": 90,
+    "education": 75
+  },
+  "strengths": {
+    "highlightedSkills": ["skill1", "skill2", "skill3"],
+    "keyStrengths": ["strength1", "strength2"],
+    "experienceHighlights": ["highlight1", "highlight2"],
+    "softSkills": ["communication", "leadership"],
+    "positiveIndicators": ["indicator1", "indicator2"]
+  },
+  "skillGaps": [
+    {
+      "skill": "Node.js",
+      "importance": "High",
+      "timeToLearn": "2-3 months",
+      "difficulty": "Intermediate",
+      "description": "Backend development framework"
+    }
+  ],
+  "jobMarket": {
+    "demandScore": 85,
+    "growthRate": 15,
+    "trend": "Growing",
+    "competitionLevel": "Medium",
+    "remoteOpportunities": 75,
+    "marketInsights": ["insight1", "insight2"]
+  },
+  "topCompanies": [
+    {
+      "name": "Company Name",
+      "industry": "Tech",
+      "size": "Medium",
+      "location": "London",
+      "remotePolicy": "Hybrid",
+      "activelyHiring": true,
+      "culture": ["innovative", "collaborative"],
+      "benefits": ["flexible hours", "learning budget"]
+    }
+  ],
+  "learningResources": [
+    {
+      "title": "JavaScript Mastery Course",
+      "provider": "Coursera",
+      "type": "Course",
+      "duration": "6 weeks",
+      "difficulty": "Intermediate",
+      "cost": "Paid",
+      "rating": 4.8,
+      "url": "https://coursera.org/course",
+      "description": "Comprehensive JS course",
+      "skills": ["JavaScript", "ES6", "DOM"]
+    }
+  ],
+  "culturalFit": {
+    "workStyle": "Collaborative",
+    "environmentPreference": "Startup",
+    "teamSize": "Medium",
+    "workArrangement": "Hybrid",
+    "managementStyle": "Autonomous",
+    "innovationLevel": "High",
+    "riskTolerance": "Medium",
+    "personalityTraits": ["analytical", "creative"],
+    "culturalFitScores": {
+      "startup": 85,
+      "corporate": 60,
+      "agency": 75,
+      "nonprofit": 45
+    }
+  },
+  "alternativeCareers": [
+    {
+      "title": "Frontend Developer",
+      "matchPercentage": 85,
+      "overlapSkills": ["JavaScript", "HTML", "CSS"],
+      "additionalSkillsNeeded": ["React", "Vue"],
+      "transitionDifficulty": "Easy",
+      "timeToTransition": "3-6 months",
+      "salaryComparison": "Similar",
+      "description": "Focus on user interfaces",
+      "keyDifferences": ["More visual", "User-focused"]
+    }
+  ],
+  "careerTimeline": {
+    "currentLevel": "Junior",
+    "timeToNextLevel": "12-18 months",
+    "milestones": [
+      {
+        "year": 1,
+        "level": "Junior",
+        "title": "Junior Developer",
+        "responsibilities": ["Code features", "Bug fixes"],
+        "requiredSkills": ["HTML", "CSS", "JavaScript"],
+        "certifications": ["AWS Cloud Practitioner"],
+        "averageSalary": 30000,
+        "keyAchievements": ["First production deploy"]
+      }
+    ],
+    "alternativePaths": ["DevOps", "Product Manager"],
+    "skillProgression": {
+      "technical": ["JavaScript", "React", "Node.js"],
+      "leadership": ["Mentoring", "Project management"],
+      "domain": ["E-commerce", "FinTech"]
+    }
+  },
+  "resumeFeedback": {
+    "overallScore": 75,
+    "clarity": {
+      "score": 80,
+      "suggestions": ["Add more quantified achievements"]
+    },
+    "keywordOptimization": {
+      "score": 70,
+      "missingKeywords": ["React", "API"],
+      "suggestions": ["Include more technical keywords"]
+    },
+    "formatting": {
+      "score": 85,
+      "issues": ["Inconsistent bullet points"],
+      "improvements": ["Use consistent formatting"]
+    },
+    "content": {
+      "score": 75,
+      "strengths": ["Good project descriptions"],
+      "weaknesses": ["Missing soft skills"],
+      "suggestions": ["Add leadership examples"]
+    },
+    "atsCompatibility": {
+      "score": 80,
+      "issues": ["Complex formatting"],
+      "improvements": ["Simplify layout for ATS"]
+    }
+  },
+  "networkingOpportunities": [
+    {
+      "name": "London Tech Meetup",
+      "type": "Meetup",
+      "description": "Monthly tech networking",
+      "url": "https://meetup.com/london-tech",
+      "location": "London",
+      "cost": "Free",
+      "relevanceScore": 90,
+      "attendeeCount": "200+",
+      "focus": ["JavaScript", "Networking"]
+    }
+  ],
+  "actionPlan": {
+    "phase1": [
+      {
+        "id": 1,
+        "title": "Complete React Fundamentals",
+        "description": "Master React basics and hooks",
+        "category": "Learning",
+        "timeframe": "4 weeks",
+        "difficulty": "Medium",
+        "priority": "High",
+        "resources": [],
+        "completed": false,
+        "estimatedHours": 40
+      }
+    ],
+    "phase2": [],
+    "phase3": [],
+    "totalEstimatedTime": "6 months",
+    "quickWins": []
+  },
+  "gamification": {
+    "level": 3,
+    "xp": 1250,
+    "xpToNextLevel": 750,
+    "badges": [],
+    "achievements": [],
+    "careerReadinessLevel": 65,
+    "weeklyProgress": {
+      "skillsLearned": 2,
+      "projectsCompleted": 1,
+      "applicationsSubmitted": 5,
+      "networkingEvents": 0
+    }
+  },
+  "salaryPredictions": {
+    "currency": "GBP",
+    "entry": 25000,
+    "mid": 45000,
+    "senior": 75000
+  },
+  "careerPathSuggestions": [
+    "Focus on React ecosystem",
+    "Build portfolio projects", 
+    "Contribute to open source",
+    "Attend networking events"
+  ]
+}`
     }],
   });
   
