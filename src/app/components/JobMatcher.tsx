@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import styles from '../styles/JobMatcher.module.css';
 import {
@@ -38,7 +40,7 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
       
       <div className={styles.content}>
         <div className={styles.column}>
-          <Card className="h-full">
+          <Card>
             <CardHeader>
               <CardTitle>Skill Gap Analysis</CardTitle>
               <CardDescription>What to level up next</CardDescription>
