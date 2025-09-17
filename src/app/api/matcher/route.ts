@@ -55,6 +55,7 @@ TASK:
 - Keep bullets concise (<= 80 chars each) and practical.
 - Write in a witty, upbeat tone with 1-2 light metaphors max.
 - Always speak to the user in 'you'.
+- With suggested career, give one clear job title that fits the resume best.
 -------
 RESUME:
 ${prompt}
@@ -71,9 +72,9 @@ OUTPUT FORMAT:
 </Skill Gap Analysis>
 <Salary Predictions>
    <ul>
-      <li>Entry: $...</li>
-      <li>Mid: $...</li>
-      <li>Senior: $...</li>
+      <li>Entry: £...</li>
+      <li>Mid: £...</li>
+      <li>Senior: £...</li>
    </ul>
 </Salary Predictions>
 <Career Path Suggestions>

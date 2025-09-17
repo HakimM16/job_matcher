@@ -7,13 +7,15 @@
 .subtitle {
   margin-bottom: 32px;
   text-align: center;
+  font-size: 24px;
+  color: #ccc;
 }
 
 .worth {
   font-size: 40px;
   font-weight: bold;
   text-align: center;
-  background: linear-gradient(45deg, #ffdd8c, #ffe608);
+  background: linear-gradient(45deg, #a7310d, #e08317);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 10px #ffeb3b40;
@@ -73,11 +75,19 @@
 }
 
 .card {
-  background: transparent;
-  border: 1px solid #445166;
+  background: linear-gradient(135deg, rgba(40, 44, 52, 0.9), rgba(68, 81, 102, 0.3));
+  border: 2px solid #445166;
   color: #e5e7eb;
-  border-radius: 8px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), 0 2px 10px rgba(68, 81, 102, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  border-color: #a7310d;
+  box-shadow: 0 6px 25px rgba(167, 49, 13, 0.2), 0 4px 15px rgba(68, 81, 102, 0.3);
+  transform: translateY(-2px);
 }
 
 .cardHeader {
@@ -88,22 +98,26 @@
 }
 
 .cardTitle {
-  font-size: 24px;
+  font-size: 1.75rem;
   font-weight: 600;
-  line-height: 1;
   letter-spacing: -0.025em;
   margin-bottom: 16px;
+  background: linear-gradient(45deg, #a7310d, #e08317);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .cardDescription {
-  font-size: 14px;
-  color: #9ca3af;
-  margin-bottom: 16px;
+  font-size: 1rem;
+  color: #ccc;
+  font-weight: 700;
 }
 
 .cardContent {
   padding: 24px;
   padding-top: 0;
+  color: #e5e7eb;
 }
 
 .cardFooter {

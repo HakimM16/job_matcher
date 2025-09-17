@@ -23,21 +23,23 @@
 }
 
 .mainBtn {
-  background: linear-gradient(45deg, #ffc75d, #ffc708);
+  background: linear-gradient(45deg, #a7310d, #e08317);
   box-shadow: 0 0 24px #ffb20861;
-  border: 2px solid #ffe825;
+  border: 2px solid #fff;
   border-radius: 100px;
   transition: background-color 0.3s ease;
   padding: 10px 20px;
-  color: #09090b;
+  color: #fff;
   cursor: pointer;
 }
 
 .mainBtn:hover {
-  background-color: #ffc75d !important;
+  background-color: #e08317 !important;
   box-shadow: 0 0 34px #ffb20861 !important;
   text-shadow: 0 0 4px #ffe825;
-  border-color: #ffe825 !important;
+  border-color: #e08317 !important;
+  transform: scale(1.05);
+  color: black;
 }
 
 .label {
