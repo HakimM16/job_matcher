@@ -82,6 +82,7 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
           </p>
         )}
       </div>
+      <br />
 
       {/* Tabbed Interface */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
@@ -94,6 +95,7 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
           <TabsTrigger value="culture" className="flex-1 min-w-[120px]">Culture</TabsTrigger>
           <TabsTrigger value="action" className="flex-1 min-w-[120px]">Action Plan</TabsTrigger>
         </TabsList>
+        <br/>
 
         {/* Overview Tab */}
         <TabsContent value="overview" className="space-y-6">
@@ -105,6 +107,7 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
                 suggestedCareer={analysis.suggestedCareer}
               />
             )}
+            <br/>
 
             {/* Legacy Skill Gap Analysis */}
             <Card className={styles.card}>
@@ -135,6 +138,7 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
               </CardContent>
             </Card>
           </div>
+          <br/>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Salary Predictions */}
@@ -171,6 +175,7 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
                 )}
               </CardContent>
             </Card>
+            <br/>
 
             {/* Career Path Suggestions */}
             <Card className={`${styles.card} h-full`}>
