@@ -3,7 +3,7 @@
 import React from 'react';
 import { MatchPercentage } from '@/types/analysis';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { TrendingUp, Brain, Briefcase, GraduationCap, Target } from 'lucide-react';
+import styles from '../styles/MatchPercentage.module.css';
 
 interface MatchPercentageProps {
   matchPercentage: MatchPercentage;
@@ -17,17 +17,17 @@ const MatchPercentageComponent: React.FC<MatchPercentageProps> = ({
   className = "" 
 }) => {
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-green-600';
-    if (score >= 60) return 'text-blue-600';
-    if (score >= 40) return 'text-yellow-600';
-    return 'text-red-600';
+    if (score >= 80) return styles.scoreGreen;
+    if (score >= 60) return styles.scoreBlue;
+    if (score >= 40) return styles.scoreYellow;
+    return styles.scoreRed;
   };
 
   const getScoreBackground = (score: number) => {
-    if (score >= 80) return 'from-green-500 to-emerald-600';
-    if (score >= 60) return 'from-blue-500 to-indigo-600';
-    if (score >= 40) return 'from-yellow-500 to-orange-600';
-    return 'from-red-500 to-pink-600';
+    if (score >= 80) return styles.bgGreen;
+    if (score >= 60) return styles.bgBlue;
+    if (score >= 40) return styles.bgYellow;
+    return styles.bgRed;
   };
 
   const getScoreMessage = (score: number) => {
@@ -41,21 +41,18 @@ const MatchPercentageComponent: React.FC<MatchPercentageProps> = ({
     {
       key: 'technical',
       title: 'Technical Skills',
-      icon: Brain,
       description: 'Programming and technical abilities',
       score: matchPercentage.technical
     },
     {
       key: 'experience',
       title: 'Experience',
-      icon: Briefcase,
       description: 'Relevant work experience',
       score: matchPercentage.experience
     },
     {
       key: 'education',
       title: 'Education',
-      icon: GraduationCap,
       description: 'Educational background',
       score: matchPercentage.education
     }
@@ -64,27 +61,26 @@ const MatchPercentageComponent: React.FC<MatchPercentageProps> = ({
   const overallMessage = getScoreMessage(matchPercentage.overall);
 
   return (
-    <Card className={`${className} border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50`}>
-      <CardHeader className="pb-6">
-        <div className="flex items-center gap-3">
-          <Target className="h-6 w-6 text-indigo-600" />
-          <CardTitle className="text-indigo-800">CV Match Score</CardTitle>
+    <Card className={`${className} ${styles.container}`}>
+      <CardHeader className={styles.header}>
+        <div className={styles.headerContent}>
+          <CardTitle className={styles.title}>🎯 CV Match Score</CardTitle>
         </div>
-        <CardDescription className="text-indigo-600">
+        <CardDescription className={styles.description}>
           How well you match {suggestedCareer} requirements
         </CardDescription>
       </CardHeader>
       
-      <CardContent className="space-y-6">
+      <CardContent className={styles.content}>
         {/* Overall Score */}
-        <div className="text-center space-y-4">
-          <div className="relative w-32 h-32 mx-auto">
+        <div className={styles.overallScore}>
+          <div className={styles.scoreCircle}>
             {/* Background Circle */}
-            <div className="absolute inset-0 rounded-full border-8 border-gray-200"></div>
+            <div className={styles.backgroundCircle}></div>
             
             {/* Progress Circle */}
             <div 
-              className={`absolute inset-0 rounded-full border-8 border-transparent bg-gradient-to-r ${getScoreBackground(matchPercentage.overall)} animate-pulse`}
+              className={`${styles.progressCircle} ${getScoreBackground(matchPercentage.overall)}`}
               style={{
                 background: `conic-gradient(from 0deg, var(--tw-gradient-stops) ${matchPercentage.overall * 3.6}deg, transparent ${matchPercentage.overall * 3.6}deg)`,
                 borderRadius: '50%',
@@ -94,106 +90,102 @@ const MatchPercentageComponent: React.FC<MatchPercentageProps> = ({
             ></div>
             
             {/* Score Text */}
-            <div className="absolute inset-0 flex items-center justify-center">
+            <div className={styles.scoreText}>
               <div className="text-center">
-                <div className={`text-3xl font-bold ${getScoreColor(matchPercentage.overall)}`}>
+                <div className={`${styles.scoreValue} ${getScoreColor(matchPercentage.overall)}`}>
                   {matchPercentage.overall}%
                 </div>
-                <div className="text-xs text-gray-600">Overall</div>
+                <div className={styles.scoreLabel}>Overall</div>
               </div>
             </div>
           </div>
           
-          <div className="space-y-1">
-            <div className="text-lg font-semibold text-gray-800">
+          <div className={styles.scoreMessage}>
+            <div className={styles.messageTitle}>
               {overallMessage.emoji} {overallMessage.message}
             </div>
-            <p className="text-sm text-gray-600">
+            <p className={styles.messageSubtitle}>
               You're {matchPercentage.overall >= 70 ? 'well-positioned' : 'on your way'} for this role
             </p>
           </div>
         </div>
 
         {/* Category Breakdown */}
-        <div className="space-y-4">
-          <h4 className="font-semibold text-gray-800 text-center">Score Breakdown</h4>
+        <div className={styles.breakdown}>
+          <h4 className={styles.breakdownTitle}>Score Breakdown</h4>
           
           {categories.map((category) => {
-            const IconComponent = category.icon;
-            
             return (
-              <div key={category.key} className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <IconComponent className="h-5 w-5 text-gray-600" />
-                    <span className="text-sm font-medium text-gray-700">
+              <div key={category.key} className={styles.category}>
+                <div className={styles.categoryHeader}>
+                  <div className={styles.categoryInfo}>
+                    <span className={styles.categoryTitle}>
                       {category.title}
                     </span>
                   </div>
-                  <span className={`font-bold text-sm ${getScoreColor(category.score)}`}>
+                  <span className={`${styles.categoryScore} ${getScoreColor(category.score)}`}>
                     {category.score}%
                   </span>
                 </div>
                 
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className={styles.progressBar}>
                   <div 
-                    className={`bg-gradient-to-r ${getScoreBackground(category.score)} h-2 rounded-full transition-all duration-1000 ease-out`}
+                    className={`${styles.progressFill} ${getScoreBackground(category.score)}`}
                     style={{ width: `${category.score}%` }}
                   />
                 </div>
                 
-                <p className="text-xs text-gray-500">{category.description}</p>
+                <p className={styles.categoryDescription}>{category.description}</p>
               </div>
             );
           })}
         </div>
 
         {/* Improvement Suggestions */}
-        <div className="mt-6 p-4 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-lg border border-indigo-200">
-          <h4 className="font-semibold text-indigo-800 mb-2 flex items-center gap-3">
-            <TrendingUp className="h-5 w-5" />
-            Quick Improvement Tips
+        <div className={styles.improvementTips}>
+          <h4 className={styles.tipsTitle}>
+            📈 Quick Improvement Tips
           </h4>
           
-          <div className="space-y-2 text-sm text-indigo-700">
+          <div className={styles.tipsList}>
             {matchPercentage.technical < 70 && (
-              <div className="flex items-start gap-3">
-                <span className="text-indigo-500 mt-1">•</span>
-                <span>Focus on building core technical skills for this role</span>
+              <div className={styles.tipItem}>
+                <span className={styles.tipBullet}>•</span>
+                <span className={styles.tipText}>Focus on building core technical skills for this role</span>
               </div>
             )}
             
             {matchPercentage.experience < 70 && (
-              <div className="flex items-start gap-3">
-                <span className="text-indigo-500 mt-1">•</span>
-                <span>Consider building portfolio projects to demonstrate experience</span>
+              <div className={styles.tipItem}>
+                <span className={styles.tipBullet}>•</span>
+                <span className={styles.tipText}>Consider building portfolio projects to demonstrate experience</span>
               </div>
             )}
             
             {matchPercentage.education < 70 && (
-              <div className="flex items-start gap-3">
-                <span className="text-indigo-500 mt-1">•</span>
-                <span>Explore relevant courses or certifications to strengthen your background</span>
+              <div className={styles.tipItem}>
+                <span className={styles.tipBullet}>•</span>
+                <span className={styles.tipText}>Explore relevant courses or certifications to strengthen your background</span>
               </div>
             )}
             
             {matchPercentage.overall >= 70 && (
-              <div className="flex items-start gap-3">
-                <span className="text-green-500 mt-1">✓</span>
-                <span>You're in great shape! Focus on polishing your resume and portfolio</span>
+              <div className={styles.tipItem}>
+                <span className={styles.tipBullet}>✓</span>
+                <span className={styles.tipText}>You're in great shape! Focus on polishing your resume and portfolio</span>
               </div>
             )}
           </div>
         </div>
 
         {/* Match Summary */}
-        <div className="text-center p-3 bg-white rounded-lg border border-gray-200">
-          <p className="text-sm text-gray-600">
+        <div className={styles.matchSummary}>
+          <p className={styles.summaryText}>
             Based on your profile, you have a{' '}
-            <span className={`font-semibold ${getScoreColor(matchPercentage.overall)}`}>
+            <span className={`${styles.summaryHighlight} ${getScoreColor(matchPercentage.overall)}`}>
               {matchPercentage.overall >= 70 ? 'strong' : matchPercentage.overall >= 50 ? 'moderate' : 'developing'}
             </span>{' '}
-            match for <span className="font-semibold text-gray-800">{suggestedCareer}</span> positions.
+            match for <span className={styles.summaryCareer}>{suggestedCareer}</span> positions.
           </p>
         </div>
       </CardContent>
