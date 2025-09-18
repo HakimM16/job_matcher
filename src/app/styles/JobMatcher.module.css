@@ -17,6 +17,7 @@
   text-align: center;
   background: linear-gradient(45deg, #a7310d, #e08317);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 10px #ffeb3b40;
 }
@@ -24,6 +25,7 @@
 .textHighlight {
   background: linear-gradient(45deg, #17d062, #08ff79);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 10px #08ff8161;
 }
@@ -59,19 +61,20 @@
 
 .listItem {
   text-align: left;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   font-size: 16px;
   color: #ccc;
   position: relative;
-  padding: 10px 20px;
+  padding: 12px 24px;
 }
 
 .listItem::before {
+  content: "•";
   color: #ccc;
   font-size: 24px;
   position: absolute;
-  left: 0;
-  top: -5px;
+  left: 8px;
+  top: 8px;
 }
 
 .card {
@@ -133,9 +136,10 @@
   display: inline-block;
   border: 1px solid #445166;
   color: #e5e7eb;
-  padding: 2px 8px;
+  padding: 4px 12px;
   border-radius: 9999px;
   font-weight: 700;
+  margin-left: 8px;
 }
 .high { border-color: #fecaca; color: #ef4444; }
 .medium { border-color: #fde68a; color: #d97706; }

@@ -66,7 +66,7 @@ const MatchPercentageComponent: React.FC<MatchPercentageProps> = ({
   return (
     <Card className={`${className} border-indigo-200 bg-gradient-to-br from-indigo-50 to-purple-50`}>
       <CardHeader className="pb-6">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <Target className="h-6 w-6 text-indigo-600" />
           <CardTitle className="text-indigo-800">CV Match Score</CardTitle>
         </div>
@@ -124,8 +124,8 @@ const MatchPercentageComponent: React.FC<MatchPercentageProps> = ({
             return (
               <div key={category.key} className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <IconComponent className="h-4 w-4 text-gray-600" />
+                  <div className="flex items-center gap-3">
+                    <IconComponent className="h-5 w-5 text-gray-600" />
                     <span className="text-sm font-medium text-gray-700">
                       {category.title}
                     </span>
@@ -150,35 +150,35 @@ const MatchPercentageComponent: React.FC<MatchPercentageProps> = ({
 
         {/* Improvement Suggestions */}
         <div className="mt-6 p-4 bg-gradient-to-r from-indigo-100 to-purple-100 rounded-lg border border-indigo-200">
-          <h4 className="font-semibold text-indigo-800 mb-2 flex items-center gap-2">
-            <TrendingUp className="h-4 w-4" />
+          <h4 className="font-semibold text-indigo-800 mb-2 flex items-center gap-3">
+            <TrendingUp className="h-5 w-5" />
             Quick Improvement Tips
           </h4>
           
           <div className="space-y-2 text-sm text-indigo-700">
             {matchPercentage.technical < 70 && (
-              <div className="flex items-start gap-2">
+              <div className="flex items-start gap-3">
                 <span className="text-indigo-500 mt-1">•</span>
                 <span>Focus on building core technical skills for this role</span>
               </div>
             )}
             
             {matchPercentage.experience < 70 && (
-              <div className="flex items-start gap-2">
+              <div className="flex items-start gap-3">
                 <span className="text-indigo-500 mt-1">•</span>
                 <span>Consider building portfolio projects to demonstrate experience</span>
               </div>
             )}
             
             {matchPercentage.education < 70 && (
-              <div className="flex items-start gap-2">
+              <div className="flex items-start gap-3">
                 <span className="text-indigo-500 mt-1">•</span>
                 <span>Explore relevant courses or certifications to strengthen your background</span>
               </div>
             )}
             
             {matchPercentage.overall >= 70 && (
-              <div className="flex items-start gap-2">
+              <div className="flex items-start gap-3">
                 <span className="text-green-500 mt-1">✓</span>
                 <span>You're in great shape! Focus on polishing your resume and portfolio</span>
               </div>
