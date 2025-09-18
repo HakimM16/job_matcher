@@ -57,12 +57,13 @@ const ResumeAnalyser = () => {
         <div className={styles.uploaderWrapper}>
           <p className={styles.instructionsText}>Upload your resume to see the recommended job.</p>
           <ResumeUploader setIsLoading={setIsLoadingResume} setResumeText={setResumeText} />
+          <br/>
           
           {/* Demo Button */}
           <div className="mt-4 text-center">
             <button
               onClick={handleMockDemo}
-              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-md"
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-md cursor-pointer"
             >
               🚀 Try Demo with Sample Data
             </button>
@@ -75,7 +76,7 @@ const ResumeAnalyser = () => {
             <div className={styles.loadingContainer}>
               <div className={styles.loadingSpinner}></div>
               <p className="text-sm text-gray-600 mt-2">
-                {mockMode ? 'Loading demo analysis...' : 'Analyzing your resume...'}
+                {mockMode ? 'Loading demo analysis...' : 'Analysing your resume...'}
               </p>
             </div>}
         </div>
@@ -91,7 +92,7 @@ const ResumeAnalyser = () => {
               }}
               className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm"
             >
-              ← Analyze Another Resume
+              ← Analyse Another Resume
             </button>
           </div>
         </div>

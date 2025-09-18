@@ -120,6 +120,27 @@
   color: #e5e7eb;
 }
 
+/* Themed text utilities for bold and colors */
+.matchText { color: #e5e7eb; font-weight: 600; }
+.matchValue { color: #e08317; font-weight: 700; }
+.mutedText { color: #9ca3af; font-weight: 600; font-size: 0.95rem; }
+.valuePositiveBold { color: #16a34a; font-weight: 700; }
+.valuePrimaryBold { color: #2563eb; font-weight: 700; }
+.valueAccentBold { color: #7c3aed; font-weight: 700; }
+
+/* Tag styles replacing badges */
+.tag {
+  display: inline-block;
+  border: 1px solid #445166;
+  color: #e5e7eb;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  font-weight: 700;
+}
+.high { border-color: #fecaca; color: #ef4444; }
+.medium { border-color: #fde68a; color: #d97706; }
+.low { border-color: #bbf7d0; color: #16a34a; }
+
 .cardFooter {
   display: flex;
   align-items: center;

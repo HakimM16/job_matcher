@@ -20,7 +20,6 @@ import LearningResources from './LearningResources';
 import MatchPercentage from './MatchPercentage';
 import CulturalFit from './CulturalFit';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs";
-import { Badge } from "./ui/badge";
 
 interface JobMatcherProps {
   jobMatch: string;
@@ -78,24 +77,22 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
         <p className={styles.subtitle}>Recommended career path</p>
         
         {analysis.matchPercentage && (
-          <div className="mt-4 flex justify-center">
-            <Badge className="bg-blue-100 text-blue-800 border-blue-200 px-4 py-2 text-lg">
-              {analysis.matchPercentage.overall}% Match
-            </Badge>
-          </div>
+          <p className={`${styles.matchText} mt-4`}>
+            <span className={styles.matchValue}>{analysis.matchPercentage.overall}%</span> match
+          </p>
         )}
       </div>
 
       {/* Tabbed Interface */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-7 mb-6">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="strengths">Strengths</TabsTrigger>
-          <TabsTrigger value="market">Market</TabsTrigger>
-          <TabsTrigger value="resources">Learn</TabsTrigger>
-          <TabsTrigger value="companies">Companies</TabsTrigger>
-          <TabsTrigger value="culture">Culture</TabsTrigger>
-          <TabsTrigger value="action">Action Plan</TabsTrigger>
+        <TabsList className="flex flex-wrap justify-center gap-2 mb-8">
+          <TabsTrigger value="overview" className="flex-1 min-w-[120px]">Overview</TabsTrigger>
+          <TabsTrigger value="strengths" className="flex-1 min-w-[120px]">Strengths</TabsTrigger>
+          <TabsTrigger value="market" className="flex-1 min-w-[120px]">Market</TabsTrigger>
+          <TabsTrigger value="resources" className="flex-1 min-w-[120px]">Learn</TabsTrigger>
+          <TabsTrigger value="companies" className="flex-1 min-w-[120px]">Companies</TabsTrigger>
+          <TabsTrigger value="culture" className="flex-1 min-w-[120px]">Culture</TabsTrigger>
+          <TabsTrigger value="action" className="flex-1 min-w-[120px]">Action Plan</TabsTrigger>
         </TabsList>
 
         {/* Overview Tab */}
@@ -110,30 +107,23 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
             )}
 
             {/* Legacy Skill Gap Analysis */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Skill Gap Analysis</CardTitle>
-                <CardDescription>What to level up next</CardDescription>
+            <Card className={styles.card}>
+              <CardHeader className={styles.cardHeader}>
+                <CardTitle className={styles.cardTitle}>Skill Gap Analysis</CardTitle>
+                <CardDescription className={styles.cardDescription}>What to level up next</CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className={styles.cardContent}>
                 {analysis.skillGaps && analysis.skillGaps.length > 0 ? (
                   <ul className={styles.list}>
                     {analysis.skillGaps.map((gap, index) => (
                       <li key={index} className={styles.listItem}>
                         <div className="flex justify-between items-start">
-                          <span className="font-medium">{gap.skill}</span>
-                          <Badge 
-                            variant="outline" 
-                            className={
-                              gap.importance === 'High' ? 'border-red-200 text-red-700' :
-                              gap.importance === 'Medium' ? 'border-yellow-200 text-yellow-700' :
-                              'border-green-200 text-green-700'
-                            }
-                          >
+                          <span className="font-semibold">{gap.skill}</span>
+                          <span className={`${styles.importance} ${gap.importance === 'High' ? styles.high : gap.importance === 'Medium' ? styles.medium : styles.low}`}>
                             {gap.importance}
-                          </Badge>
+                          </span>
                         </div>
-                        <div className="text-sm text-gray-600 mt-1">
+                        <div className={`${styles.mutedText} mt-1`}>
                           {gap.description} • {gap.timeToLearn}
                         </div>
                       </li>
@@ -148,31 +138,31 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Salary Predictions */}
-            <Card className="h-full">
-              <CardHeader>
-                <CardTitle>Salary Predictions</CardTitle>
-                <CardDescription>Market outlook by level</CardDescription>
+            <Card className={`${styles.card} h-full`}>
+              <CardHeader className={styles.cardHeader}>
+                <CardTitle className={styles.cardTitle}>Salary Predictions</CardTitle>
+                <CardDescription className={styles.cardDescription}>Market outlook by level</CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className={styles.cardContent}>
                 {analysis.salaryPredictions && (
                   <div className="space-y-3">
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-600">Entry Level:</span>
-                      <span className="font-semibold text-green-600">
+                      <span className={styles.mutedText}>Entry Level:</span>
+                      <span className={styles.valuePositiveBold}>
                         {analysis.salaryPredictions.currency === 'GBP' ? '£' : '$'}
                         {analysis.salaryPredictions.entry.toLocaleString()}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-600">Mid Level:</span>
-                      <span className="font-semibold text-blue-600">
+                      <span className={styles.mutedText}>Mid Level:</span>
+                      <span className={styles.valuePrimaryBold}>
                         {analysis.salaryPredictions.currency === 'GBP' ? '£' : '$'}
                         {analysis.salaryPredictions.mid.toLocaleString()}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-gray-600">Senior Level:</span>
-                      <span className="font-semibold text-purple-600">
+                      <span className={styles.mutedText}>Senior Level:</span>
+                      <span className={styles.valueAccentBold}>
                         {analysis.salaryPredictions.currency === 'GBP' ? '£' : '$'}
                         {analysis.salaryPredictions.senior.toLocaleString()}
                       </span>
@@ -183,17 +173,17 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
             </Card>
 
             {/* Career Path Suggestions */}
-            <Card className="h-full">
-              <CardHeader>
-                <CardTitle>Career Path Suggestions</CardTitle>
-                <CardDescription>Your next smart moves</CardDescription>
+            <Card className={`${styles.card} h-full`}>
+              <CardHeader className={styles.cardHeader}>
+                <CardTitle className={styles.cardTitle}>Career Path Suggestions</CardTitle>
+                <CardDescription className={styles.cardDescription}>Your next smart moves</CardDescription>
               </CardHeader>
-              <CardContent>
+              <CardContent className={styles.cardContent}>
                 {analysis.careerPathSuggestions && analysis.careerPathSuggestions.length > 0 ? (
                   <ul className={styles.list}>
                     {analysis.careerPathSuggestions.map((suggestion, index) => (
                       <li key={index} className={styles.listItem}>
-                        {suggestion}
+                        <span className="font-semibold">{suggestion}</span>
                       </li>
                     ))}
                   </ul>
@@ -245,38 +235,30 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
 
         {/* Action Plan Tab */}
         <TabsContent value="action">
-          <Card>
-            <CardHeader>
-              <CardTitle>Personalized Action Plan</CardTitle>
-              <CardDescription>Your roadmap to success</CardDescription>
+          <Card className={styles.card}>
+            <CardHeader className={styles.cardHeader}>
+              <CardTitle className={styles.cardTitle}>Personalised Action Plan</CardTitle>
+              <CardDescription className={styles.cardDescription}>Your roadmap to success</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className={styles.cardContent}>
               {analysis.actionPlan ? (
                 <div className="space-y-6">
                   {analysis.actionPlan.phase1.length > 0 && (
                     <div>
-                      <h4 className="font-semibold text-gray-800 mb-3">Phase 1: Next 3 Months</h4>
+                      <h4 className="font-semibold mb-3">Phase 1: Next 3 Months</h4>
                       <div className="space-y-2">
                         {analysis.actionPlan.phase1.map((step, index) => (
                           <div key={step.id} className="border border-gray-200 rounded-lg p-3">
                             <div className="flex justify-between items-start">
-                              <h5 className="font-medium text-gray-800">{step.title}</h5>
-                              <Badge variant="outline" className={
-                                step.priority === 'High' ? 'border-red-200 text-red-700' :
-                                step.priority === 'Medium' ? 'border-yellow-200 text-yellow-700' :
-                                'border-green-200 text-green-700'
-                              }>
+                              <h5 className="font-semibold">{step.title}</h5>
+                              <span className={`${styles.tag} ${step.priority === 'High' ? styles.high : step.priority === 'Medium' ? styles.medium : styles.low}`}>
                                 {step.priority}
-                              </Badge>
+                              </span>
                             </div>
-                            <p className="text-sm text-gray-600 mt-1">{step.description}</p>
+                            <p className={`${styles.mutedText} mt-1`}>{step.description}</p>
                             <div className="flex gap-2 mt-2">
-                              <Badge variant="outline" className="text-xs">
-                                {step.timeframe}
-                              </Badge>
-                              <Badge variant="outline" className="text-xs">
-                                {step.category}
-                              </Badge>
+                              <span className={`${styles.tag} text-xs`}>{step.timeframe}</span>
+                              <span className={`${styles.tag} text-xs`}>{step.category}</span>
                             </div>
                           </div>
                         ))}
@@ -286,12 +268,12 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
                   
                   {analysis.actionPlan.quickWins.length > 0 && (
                     <div>
-                      <h4 className="font-semibold text-gray-800 mb-3">Quick Wins</h4>
+                      <h4 className="font-semibold mb-3">Quick Wins</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {analysis.actionPlan.quickWins.map((win, index) => (
                           <div key={win.id} className="border border-green-200 rounded-lg p-3 bg-green-50">
-                            <h5 className="font-medium text-green-800">{win.title}</h5>
-                            <p className="text-sm text-green-600 mt-1">{win.description}</p>
+                            <h5 className="font-semibold">{win.title}</h5>
+                            <p className={`${styles.mutedText} mt-1`}>{win.description}</p>
                           </div>
                         ))}
                       </div>
