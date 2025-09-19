@@ -1,0 +1,348 @@
+/* CulturalFit Component Styles */
+
+.culturalFitCard {
+  border: 1px solid #fed7aa;
+  background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+}
+
+.culturalFitHeader {
+  padding-bottom: 1rem;
+}
+
+.culturalFitTitleContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.culturalFitIcon {
+  font-size: 2.25rem;
+}
+
+.culturalFitTitle {
+  color: #9a3412;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.culturalFitDescription {
+  color: #ea580c;
+  margin-top: 0.5rem;
+}
+
+.culturalFitContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Best Environment Match */
+.bestEnvironmentSection {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.bestEnvironmentIcon {
+  font-size: 2.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.bestEnvironmentTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.bestEnvironmentScore {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #ea580c;
+  margin: 0;
+}
+
+.bestEnvironmentDescription {
+  font-size: 0.875rem;
+  color: #fff;
+  margin: 0;
+}
+
+/* Environment Scores */
+.environmentScoresSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.environmentScoresTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.environmentScoreItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.environmentScoreHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.environmentScoreInfo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.environmentScoreIcon {
+  font-size: 1.125rem;
+}
+
+.environmentScoreName {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.environmentScoreValue {
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: #fff;
+}
+
+.environmentScoreBar {
+  width: 100%;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  height: 0.5rem;
+}
+
+.environmentScoreBarFill {
+  background: linear-gradient(90deg, #f97316 0%, #f59e0b 100%);
+  height: 0.5rem;
+  border-radius: 9999px;
+  transition: all 1s ease;
+}
+
+/* Work Preferences */
+.workPreferencesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .workPreferencesGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.workPreferencesSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.workPreferencesTitle {
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.workPreferencesList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.workPreferenceItem {
+  font-size: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.workPreferenceIcon {
+  font-size: 1rem;
+  color: #6b7280;
+}
+
+.workPreferenceEmoji {
+  font-size: 1rem;
+}
+
+/* Personality Traits */
+.personalityTraitsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.personalityTraitsTitle {
+  font-weight: 600;
+  color: #1f2937;
+  margin: 0;
+}
+
+.personalityTraitsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.personalityTraitBadge {
+  background-color: #fed7aa;
+  color: #9a3412;
+  border: 1px solid #fdba74;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+/* Environment Recommendations */
+.environmentRecommendations {
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #fed7aa 0%, #fef3c7 50%, #fde68a 100%);
+  border-radius: 0.75rem;
+  border: 2px solid #fdba74;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.environmentRecommendationsTitle {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #9a3412;
+  margin: 0 0 1.25rem 0;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #fdba74;
+}
+
+.environmentRecommendationsIcon {
+  font-size: 1.5rem;
+  display: inline-block;
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .8;
+  }
+}
+
+.environmentRecommendationsContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  font-size: 1rem;
+  color: #b45309;
+  line-height: 1.6;
+}
+
+.environmentRecommendationItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 0.5rem;
+  border-left: 4px solid #f97316;
+  transition: all 0.2s ease-in-out;
+}
+
+.environmentRecommendationItem:hover {
+  background: rgba(255, 255, 255, 0.5);
+  transform: translateX(4px);
+}
+
+.environmentRecommendationBullet {
+  color: #f97316;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 0.125rem;
+  min-width: 1rem;
+}
+
+.environmentRecommendationText {
+  flex: 1;
+  line-height: 1.6;
+}
+
+.environmentRecommendationStrong {
+  font-weight: 700;
+  color: #9a3412;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Company Size Recommendation */
+.companySizeRecommendation {
+  padding: 0.75rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  border: 1px solid #e5e7eb;
+}
+
+.companySizeRecommendationText {
+  font-size: 1rem;
+  color: #6b7280;
+  text-align: center;
+  margin: 0;
+}
+
+.companySizeRecommendationStrong {
+  font-weight: 600;
+}
+
+.companySizeRecommendationHighlight {
+  font-weight: 600;
+  color: #ea580c;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .workPreferencesGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .environmentRecommendationsContent {
+    font-size: 0.8rem;
+  }
+  
+  .bestEnvironmentScore {
+    font-size: 1.5rem;
+  }
+  
+  .bestEnvironmentTitle {
+    font-size: 1.125rem;
+  }
+}
+
+/* Animation for progress bars */
+@keyframes fillProgress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: var(--progress-width);
+  }
+}
+
+.environmentScoreBarFill {
+  animation: fillProgress 1s ease-out;
+}

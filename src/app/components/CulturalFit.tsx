@@ -4,7 +4,7 @@ import React from 'react';
 import { CulturalFitAnalysis } from '@/types/analysis';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { Building, Users, MapPin, Lightbulb, TrendingUp, Gauge } from 'lucide-react';
+import styles from '../styles/CulturalFit.module.css';
 
 interface CulturalFitProps {
   culturalFit: CulturalFitAnalysis;
@@ -13,10 +13,10 @@ interface CulturalFitProps {
 
 const CulturalFit: React.FC<CulturalFitProps> = ({ culturalFit, className = "" }) => {
   const getScoreColor = (score: number) => {
-    if (score >= 80) return 'text-green-600 bg-green-100 border-green-200';
-    if (score >= 60) return 'text-blue-600 bg-blue-100 border-blue-200';
-    if (score >= 40) return 'text-yellow-600 bg-yellow-100 border-yellow-200';
-    return 'text-red-600 bg-red-100 border-red-200';
+    if (score >= 80) return 'green';
+    if (score >= 60) return 'blue';
+    if (score >= 40) return 'yellow';
+    return 'red';
   };
 
   const getEnvironmentIcon = (env: string) => {
@@ -58,47 +58,48 @@ const CulturalFit: React.FC<CulturalFitProps> = ({ culturalFit, className = "" }
   const topEnvironment = environmentScores[0];
 
   return (
-    <Card className={`${className} border-orange-200 bg-gradient-to-br from-orange-50 to-amber-50`}>
-      <CardHeader className="pb-4">
-        <div className="flex items-center gap-2">
-          <span className="text-4xl">🎯</span>
-          <CardTitle className="text-orange-800">Cultural Fit Analysis</CardTitle>
+    <Card className={`${className} ${styles.culturalFitCard}`}>
+      <CardHeader className={styles.culturalFitHeader}>
+        <div className={styles.culturalFitTitleContainer}>
+          <span className={styles.culturalFitIcon}>🎯</span>
+          <CardTitle className={styles.culturalFitTitle}>Cultural Fit Analysis</CardTitle>
         </div>
-        <CardDescription className="text-orange-600">
+        <CardDescription className={styles.culturalFitDescription}>
           Find your ideal work environment and company culture 🎯
         </CardDescription>
       </CardHeader>
       
-      <CardContent className="space-y-6">
+      <CardContent className={styles.culturalFitContent}>
         {/* Best Environment Match */}
-        <div className="text-center space-y-3">
-          <div className="text-4xl mb-2">{topEnvironment.icon}</div>
-          <h3 className="text-xl font-bold text-gray-800">
+        <div className={styles.bestEnvironmentSection}>
+          <div className={styles.bestEnvironmentIcon}>{topEnvironment.icon}</div>
+          <h3 className={styles.bestEnvironmentTitle}>
             {topEnvironment.name} Environment
           </h3>
-          <div className="text-3xl font-bold text-orange-600">
+          <div className={styles.bestEnvironmentScore}>
             {topEnvironment.score}% Match
           </div>
-          <p className="text-sm text-gray-600">
+          <p className={styles.bestEnvironmentDescription}>
             This environment aligns best with your working style and preferences
           </p>
         </div>
+        <br />
 
         {/* Environment Scores */}
-        <div className="space-y-3">
-          <h4 className="font-semibold text-gray-800">Environment Fit Scores</h4>
+        <div className={styles.environmentScoresSection}>
+          <h4 className={styles.environmentScoresTitle}>Environment Fit Scores</h4>
           {environmentScores.map((env) => (
-            <div key={env.name} className="space-y-2">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-lg">{env.icon}</span>
-                  <span className="text-sm font-medium text-gray-700">{env.name}</span>
+            <div key={env.name} className={styles.environmentScoreItem}>
+              <div className={styles.environmentScoreHeader}>
+                <div className={styles.environmentScoreInfo}>
+                  <span className={styles.environmentScoreIcon}>{env.icon}</span>
+                  <span className={styles.environmentScoreName}>{env.name}</span>
                 </div>
-                <span className="font-bold text-sm text-gray-600">{env.score}%</span>
+                <span className={styles.environmentScoreValue}>{env.score}%</span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-2">
+              <div className={styles.environmentScoreBar}>
                 <div 
-                  className="bg-gradient-to-r from-orange-500 to-amber-600 h-2 rounded-full transition-all duration-1000"
+                  className={styles.environmentScoreBarFill}
                   style={{ width: `${env.score}%` }}
                 />
               </div>
@@ -107,38 +108,38 @@ const CulturalFit: React.FC<CulturalFitProps> = ({ culturalFit, className = "" }
         </div>
 
         {/* Work Preferences */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-3">
-            <h4 className="font-semibold text-gray-800">Work Style</h4>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <span>{getWorkStyleIcon(culturalFit.workStyle)}</span>
+        <div className={styles.workPreferencesGrid}>
+          <div className={styles.workPreferencesSection}>
+            <h4 className={styles.workPreferencesTitle}>Work Style</h4>
+            <div className={styles.workPreferencesList}>
+              <div className={styles.workPreferenceItem}>
+                <span className={styles.workPreferenceEmoji}>{getWorkStyleIcon(culturalFit.workStyle)}</span>
                 <Badge variant="outline">{culturalFit.workStyle}</Badge>
               </div>
-              <div className="flex items-center gap-2">
-                <Users className="h-4 w-4 text-gray-600" />
+              <div className={styles.workPreferenceItem}>
+                <span className={styles.workPreferenceIcon}>👥</span>
                 <Badge variant="outline">{culturalFit.teamSize} Team</Badge>
               </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-gray-600" />
+              <div className={styles.workPreferenceItem}>
+                <span className={styles.workPreferenceIcon}>📍</span>
                 <Badge variant="outline">{culturalFit.workArrangement}</Badge>
               </div>
             </div>
           </div>
 
-          <div className="space-y-3">
-            <h4 className="font-semibold text-gray-800">Preferences</h4>
-            <div className="space-y-2">
-              <div className="flex items-center gap-2">
-                <Lightbulb className="h-4 w-4 text-gray-600" />
+          <div className={styles.workPreferencesSection}>
+            <h4 className={styles.workPreferencesTitle}>Preferences</h4>
+            <div className={styles.workPreferencesList}>
+              <div className={styles.workPreferenceItem}>
+                <span className={styles.workPreferenceIcon}>💡</span>
                 <Badge variant="outline">{culturalFit.innovationLevel} Innovation</Badge>
               </div>
-              <div className="flex items-center gap-2">
-                <span>{getRiskIcon(culturalFit.riskTolerance)}</span>
+              <div className={styles.workPreferenceItem}>
+                <span className={styles.workPreferenceEmoji}>{getRiskIcon(culturalFit.riskTolerance)}</span>
                 <Badge variant="outline">{culturalFit.riskTolerance} Risk</Badge>
               </div>
-              <div className="flex items-center gap-2">
-                <TrendingUp className="h-4 w-4 text-gray-600" />
+              <div className={styles.workPreferenceItem}>
+                <span className={styles.workPreferenceIcon}>📈</span>
                 <Badge variant="outline">{culturalFit.managementStyle}</Badge>
               </div>
             </div>
@@ -147,13 +148,13 @@ const CulturalFit: React.FC<CulturalFitProps> = ({ culturalFit, className = "" }
 
         {/* Personality Traits */}
         {culturalFit.personalityTraits && culturalFit.personalityTraits.length > 0 && (
-          <div className="space-y-3">
-            <h4 className="font-semibold text-gray-800">Personality Traits</h4>
-            <div className="flex flex-wrap gap-2">
+          <div className={styles.personalityTraitsSection}>
+            <h4 className={styles.personalityTraitsTitle}>Personality Traits</h4>
+            <div className={styles.personalityTraitsList}>
               {culturalFit.personalityTraits.map((trait, index) => (
                 <Badge 
                   key={index}
-                  className="bg-orange-100 text-orange-800 border-orange-200 capitalize"
+                  className={styles.personalityTraitBadge}
                 >
                   {trait}
                 </Badge>
@@ -163,58 +164,59 @@ const CulturalFit: React.FC<CulturalFitProps> = ({ culturalFit, className = "" }
         )}
 
         {/* Environment Recommendations */}
-        <div className="mt-6 p-4 bg-gradient-to-r from-orange-100 to-amber-100 rounded-lg border border-orange-200">
-          <h4 className="font-semibold text-orange-800 mb-3 flex items-center gap-2">
-            <Gauge className="h-4 w-4" />
+        <div className={styles.environmentRecommendations}>
+          <h4 className={styles.environmentRecommendationsTitle}>
+            <span className={styles.environmentRecommendationsIcon}>📊</span>
             Cultural Fit Insights
           </h4>
           
-          <div className="space-y-3 text-sm text-orange-700">
-            <div className="flex items-start gap-2">
-              <span className="text-orange-500 mt-1">•</span>
-              <div>
-                <span className="font-semibold">Best Match:</span> You're most aligned with{' '}
-                <span className="font-semibold">{topEnvironment.name.toLowerCase()}</span> environments
+          <div className={styles.environmentRecommendationsContent}>
+            <div className={styles.environmentRecommendationItem}>
+              <span className={styles.environmentRecommendationBullet}>•</span>
+              <div className={styles.environmentRecommendationText}>
+                <span className={styles.environmentRecommendationStrong}>Best Match:</span> You're most aligned with{' '}
+                <span className={styles.environmentRecommendationStrong}>{topEnvironment.name.toLowerCase()}</span> environments
                 ({topEnvironment.score}% compatibility)
               </div>
             </div>
             
-            <div className="flex items-start gap-2">
-              <span className="text-orange-500 mt-1">•</span>
-              <div>
-                <span className="font-semibold">Work Style:</span> You prefer{' '}
-                <span className="font-semibold">{culturalFit.workStyle.toLowerCase()}</span> work with{' '}
-                <span className="font-semibold">{culturalFit.managementStyle.toLowerCase()}</span> management
+            <div className={styles.environmentRecommendationItem}>
+              <span className={styles.environmentRecommendationBullet}>•</span>
+              <div className={styles.environmentRecommendationText}>
+                <span className={styles.environmentRecommendationStrong}>Work Style:</span> You prefer{' '}
+                <span className={styles.environmentRecommendationStrong}>{culturalFit.workStyle.toLowerCase()}</span> work with{' '}
+                <span className={styles.environmentRecommendationStrong}>{culturalFit.managementStyle.toLowerCase()}</span> management
               </div>
             </div>
             
-            <div className="flex items-start gap-2">
-              <span className="text-orange-500 mt-1">•</span>
-              <div>
-                <span className="font-semibold">Innovation Level:</span> You thrive in{' '}
-                <span className="font-semibold">{culturalFit.innovationLevel.toLowerCase()}</span> innovation environments
+            <div className={styles.environmentRecommendationItem}>
+              <span className={styles.environmentRecommendationBullet}>•</span>
+              <div className={styles.environmentRecommendationText}>
+                <span className={styles.environmentRecommendationStrong}>Innovation Level:</span> You thrive in{' '}
+                <span className={styles.environmentRecommendationStrong}>{culturalFit.innovationLevel.toLowerCase()}</span> innovation environments
               </div>
             </div>
             
             {culturalFit.riskTolerance && (
-              <div className="flex items-start gap-2">
-                <span className="text-orange-500 mt-1">•</span>
-                <div>
-                  <span className="font-semibold">Risk Preference:</span> You're comfortable with{' '}
-                  <span className="font-semibold">{culturalFit.riskTolerance.toLowerCase()}</span> risk levels
+              <div className={styles.environmentRecommendationItem}>
+                <span className={styles.environmentRecommendationBullet}>•</span>
+                <div className={styles.environmentRecommendationText}>
+                  <span className={styles.environmentRecommendationStrong}>Risk Preference:</span> You're comfortable with{' '}
+                  <span className={styles.environmentRecommendationStrong}>{culturalFit.riskTolerance.toLowerCase()}</span> risk levels
                 </div>
               </div>
             )}
           </div>
         </div>
+        <br />
 
         {/* Company Size Recommendation */}
-        <div className="p-3 bg-white rounded-lg border border-gray-200">
-          <p className="text-sm text-gray-600 text-center">
-            💡 <span className="font-semibold">Tip:</span> Focus your job search on{' '}
-            <span className="font-semibold text-orange-600">{topEnvironment.name.toLowerCase()}</span> companies
-            that value <span className="font-semibold">{culturalFit.workStyle.toLowerCase()}</span> work styles
-            and offer <span className="font-semibold">{culturalFit.workArrangement.toLowerCase()}</span> arrangements.
+        <div className={styles.companySizeRecommendation}>
+          <p className={styles.companySizeRecommendationText}>
+            💡 <span className={styles.companySizeRecommendationStrong}>Tip:</span> Focus your job search on{' '}
+            <span className={styles.companySizeRecommendationHighlight}>{topEnvironment.name.toLowerCase()}</span> companies
+            that value <span className={styles.companySizeRecommendationStrong}>{culturalFit.workStyle.toLowerCase()}</span> work styles
+            and offer <span className={styles.companySizeRecommendationStrong}>{culturalFit.workArrangement.toLowerCase()}</span> arrangements.
           </p>
         </div>
       </CardContent>
