@@ -52,8 +52,8 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
   if (isLoading) {
     return (
       <div className={styles.container}>
-        <div className="flex justify-center items-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+        <div className={styles.loadingContainer}>
+          <div className={styles.loadingSpinner}></div>
         </div>
       </div>
     );
@@ -62,8 +62,8 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
   if (!analysis) {
     return (
       <div className={styles.container}>
-        <div className="text-center py-12">
-          <p className="text-gray-600">Unable to parse analysis results.</p>
+        <div className={styles.errorContainer}>
+          <p className={styles.errorText}>Unable to parse analysis results.</p>
         </div>
       </div>
     );
@@ -87,13 +87,13 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
       {/* Tabbed Interface */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
         <TabsList className="flex flex-wrap justify-center gap-2 mb-8">
-          <TabsTrigger value="overview" className="flex-1 min-w-[120px]">Overview</TabsTrigger>
-          <TabsTrigger value="strengths" className="flex-1 min-w-[120px]">Strengths</TabsTrigger>
-          <TabsTrigger value="market" className="flex-1 min-w-[120px]">Market</TabsTrigger>
-          <TabsTrigger value="resources" className="flex-1 min-w-[120px]">Learn</TabsTrigger>
-          <TabsTrigger value="companies" className="flex-1 min-w-[120px]">Companies</TabsTrigger>
-          <TabsTrigger value="culture" className="flex-1 min-w-[120px]">Culture</TabsTrigger>
-          <TabsTrigger value="action" className="flex-1 min-w-[120px]">Action Plan</TabsTrigger>
+          <TabsTrigger value="overview" className="flex-1 min-w-[120px]">📊 Overview</TabsTrigger>
+          <TabsTrigger value="strengths" className="flex-1 min-w-[120px]">💪 Strengths</TabsTrigger>
+          <TabsTrigger value="market" className="flex-1 min-w-[120px]">📈 Market</TabsTrigger>
+          <TabsTrigger value="resources" className="flex-1 min-w-[120px]">📚 Learn</TabsTrigger>
+          <TabsTrigger value="companies" className="flex-1 min-w-[120px]">🏢 Companies</TabsTrigger>
+          <TabsTrigger value="culture" className="flex-1 min-w-[120px]">🎯 Culture</TabsTrigger>
+          <TabsTrigger value="action" className="flex-1 min-w-[120px]">🚀 Action Plan</TabsTrigger>
         </TabsList>
         <br/>
 
@@ -250,23 +250,23 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
             </CardHeader>
             <CardContent className={styles.cardContent}>
               {analysis.actionPlan ? (
-                <div className="space-y-6">
+                <div className={styles.actionPlanContainer}>
                   {analysis.actionPlan.phase1.length > 0 && (
-                    <div>
-                      <h4 className="font-semibold mb-3">Phase 1: Next 3 Months</h4>
-                      <div className="space-y-2">
+                    <div className={styles.actionPlanPhase}>
+                      <h4 className={styles.actionPlanPhaseTitle}>Phase 1: Next 3 Months</h4>
+                      <div className={styles.actionPlanPhaseContent}>
                         {analysis.actionPlan.phase1.map((step, index) => (
-                          <div key={step.id} className="border border-gray-200 rounded-lg p-3">
-                            <div className="flex justify-between items-start">
-                              <h5 className="font-semibold">{step.title}</h5>
+                          <div key={step.id} className={styles.actionPlanStep}>
+                            <div className={styles.actionPlanStepHeader}>
+                              <h5 className={styles.actionPlanStepTitle}>{step.title}</h5>
                               <span className={`${styles.tag} ${step.priority === 'High' ? styles.high : step.priority === 'Medium' ? styles.medium : styles.low}`}>
                                 {step.priority}
                               </span>
                             </div>
-                            <p className={`${styles.mutedText} mt-1`}>{step.description}</p>
-                            <div className="flex gap-2 mt-2">
-                              <span className={`${styles.tag} text-xs`}>{step.timeframe}</span>
-                              <span className={`${styles.tag} text-xs`}>{step.category}</span>
+                            <p className={styles.actionPlanStepDescription}>{step.description}</p>
+                            <div className={styles.actionPlanStepTags}>
+                              <span className={styles.actionPlanStepTag}>{step.timeframe}</span>
+                              <span className={styles.actionPlanStepTag}>{step.category}</span>
                             </div>
                           </div>
                         ))}
@@ -275,13 +275,13 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
                   )}
                   
                   {analysis.actionPlan.quickWins.length > 0 && (
-                    <div>
-                      <h4 className="font-semibold mb-3">Quick Wins</h4>
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                    <div className={styles.quickWinsSection}>
+                      <h4 className={styles.quickWinsTitle}>Quick Wins</h4>
+                      <div className={styles.quickWinsGrid}>
                         {analysis.actionPlan.quickWins.map((win, index) => (
-                          <div key={win.id} className="border border-green-200 rounded-lg p-3 bg-green-50">
-                            <h5 className="font-semibold">{win.title}</h5>
-                            <p className={`${styles.mutedText} mt-1`}>{win.description}</p>
+                          <div key={win.id} className={styles.quickWinCard}>
+                            <h5 className={styles.quickWinTitle}>{win.title}</h5>
+                            <p className={styles.quickWinDescription}>{win.description}</p>
                           </div>
                         ))}
                       </div>
@@ -289,7 +289,7 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
                   )}
                 </div>
               ) : (
-                <p className="text-gray-500">Action plan will be generated based on your analysis.</p>
+                <p className={styles.emptyStateText}>Action plan will be generated based on your analysis.</p>
               )}
             </CardContent>
           </Card>
