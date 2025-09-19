@@ -243,7 +243,7 @@ const LearningResources: React.FC<LearningResourcesProps> = ({ resources, classN
                     </span>
                   </div>
                   
-                  {resource.skills.length > 0 && (
+                  {resource.skills && resource.skills.length > 0 && (
                     <div className={styles.skillsContainer}>
                       {resource.skills.slice(0, 3).map((skill, skillIndex) => (
                         <Badge key={skillIndex} className={styles.skillBadge}>
