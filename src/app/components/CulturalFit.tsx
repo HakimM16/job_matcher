@@ -61,7 +61,7 @@ const CulturalFit: React.FC<CulturalFitProps> = ({ culturalFit, className = "" }
     <Card className={`${className} border-orange-200 bg-gradient-to-br from-orange-50 to-amber-50`}>
       <CardHeader className="pb-4">
         <div className="flex items-center gap-2">
-          <Building className="h-6 w-6 text-orange-600" />
+          <span className="text-4xl">🎯</span>
           <CardTitle className="text-orange-800">Cultural Fit Analysis</CardTitle>
         </div>
         <CardDescription className="text-orange-600">

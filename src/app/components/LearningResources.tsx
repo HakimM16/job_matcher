@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { LearningResource } from '@/types/analysis';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { BookOpen, ExternalLink, Star, Clock, DollarSign, Filter, Award, PlayCircle } from 'lucide-react';
+import styles from '../styles/LearningResources.module.css';
 
 interface LearningResourcesProps {
   resources: LearningResource[];
@@ -15,43 +15,43 @@ const LearningResources: React.FC<LearningResourcesProps> = ({ resources, classN
   const [filter, setFilter] = useState<'all' | 'free' | 'course' | 'certification'>('all');
   const [difficultyFilter, setDifficultyFilter] = useState<string>('all');
 
-  const getTypeIcon = (type: string) => {
+  const getTypeText = (type: string) => {
     switch (type) {
-      case 'Course': return <PlayCircle className="h-4 w-4" />;
-      case 'Certification': return <Award className="h-4 w-4" />;
-      case 'Tutorial': return <BookOpen className="h-4 w-4" />;
-      case 'Book': return <BookOpen className="h-4 w-4" />;
-      case 'Documentation': return <BookOpen className="h-4 w-4" />;
-      default: return <BookOpen className="h-4 w-4" />;
+      case 'Course': return '▶';
+      case 'Certification': return '🏆';
+      case 'Tutorial': return '📖';
+      case 'Book': return '📚';
+      case 'Documentation': return '📄';
+      default: return '📖';
     }
   };
 
   const getTypeColor = (type: string) => {
     switch (type) {
-      case 'Course': return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'Certification': return 'bg-purple-100 text-purple-800 border-purple-200';
-      case 'Tutorial': return 'bg-green-100 text-green-800 border-green-200';
-      case 'Book': return 'bg-orange-100 text-orange-800 border-orange-200';
-      case 'Documentation': return 'bg-gray-100 text-gray-800 border-gray-200';
-      default: return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'Course': return styles.badgeCourse;
+      case 'Certification': return styles.badgeCertification;
+      case 'Tutorial': return styles.badgeTutorial;
+      case 'Book': return styles.badgeBook;
+      case 'Documentation': return styles.badgeDocumentation;
+      default: return styles.badgeCourse;
     }
   };
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
-      case 'Beginner': return 'bg-green-100 text-green-800 border-green-200';
-      case 'Intermediate': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
-      case 'Advanced': return 'bg-red-100 text-red-800 border-red-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'Beginner': return styles.badgeDifficultyBeginner;
+      case 'Intermediate': return styles.badgeDifficultyIntermediate;
+      case 'Advanced': return styles.badgeDifficultyAdvanced;
+      default: return styles.badgeOutline;
     }
   };
 
   const getCostColor = (cost: string) => {
     switch (cost) {
-      case 'Free': return 'bg-green-100 text-green-800 border-green-200';
-      case 'Freemium': return 'bg-blue-100 text-blue-800 border-blue-200';
-      case 'Paid': return 'bg-orange-100 text-orange-800 border-orange-200';
-      default: return 'bg-gray-100 text-gray-800 border-gray-200';
+      case 'Free': return styles.badgeCostFree;
+      case 'Freemium': return styles.badgeCostFreemium;
+      case 'Paid': return styles.badgeCostPaid;
+      default: return styles.badgeOutline;
     }
   };
 
@@ -69,10 +69,10 @@ const LearningResources: React.FC<LearningResourcesProps> = ({ resources, classN
     const hasHalfStar = rating % 1 !== 0;
 
     for (let i = 0; i < fullStars; i++) {
-      stars.push(<Star key={i} className="h-3 w-3 fill-yellow-400 text-yellow-400" />);
+      stars.push(<span key={i} className={styles.star}>★</span>);
     }
     if (hasHalfStar) {
-      stars.push(<Star key="half" className="h-3 w-3 fill-yellow-400/50 text-yellow-400" />);
+      stars.push(<span key="half" className={styles.starHalf}>☆</span>);
     }
     return stars;
   };
@@ -80,76 +80,76 @@ const LearningResources: React.FC<LearningResourcesProps> = ({ resources, classN
   const uniqueDifficulties = Array.from(new Set(resources.map(r => r.difficulty)));
 
   return (
-    <Card className={`${className} border-emerald-200 bg-gradient-to-br from-emerald-50 to-green-50`}>
-      <CardHeader className="pb-4">
-        <div className="flex items-center gap-2">
-          <BookOpen className="h-6 w-6 text-emerald-600" />
-          <CardTitle className="text-emerald-800">Learning Resources</CardTitle>
+    <Card className={`${className} ${styles.container}`}>
+      <CardHeader className={styles.header}>
+        <div className={styles.headerContent}>
+          <div className={styles.title}>📖</div>
+          <CardTitle className={styles.title}>Learning Resources</CardTitle>
         </div>
-        <CardDescription className="text-emerald-600">
+        <CardDescription className={styles.description}>
           Curated courses and tutorials to fill your skill gaps 📚
         </CardDescription>
       </CardHeader>
       
-      <CardContent className="space-y-6">
+      <CardContent className={styles.content}>
         {/* Filters */}
         {resources.length > 0 && (
-          <div className="space-y-3">
-            <div className="flex items-center gap-2 mb-3">
-              <Filter className="h-4 w-4 text-gray-600" />
-              <span className="text-sm font-medium text-gray-700">Filter Resources</span>
+          <div className={styles.filtersSection}>
+            <div className={styles.filterHeader}>
+              <span className={styles.iconPlaceholder}></span>
+              <span className={styles.filterLabel}>Filter Resources</span>
             </div>
             
-            <div className="flex flex-wrap gap-2">
+            <div className={styles.filterButtons}>
               <button
                 onClick={() => setFilter('all')}
-                className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                className={`${styles.filterButton} ${
                   filter === 'all' 
-                    ? 'bg-emerald-600 text-white' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? styles.filterButtonActive
+                    : styles.filterButtonInactive
                 }`}
               >
                 All ({resources.length})
               </button>
               <button
                 onClick={() => setFilter('free')}
-                className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                className={`${styles.filterButton} ${
                   filter === 'free' 
-                    ? 'bg-green-600 text-white' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? styles.filterButtonActive
+                    : styles.filterButtonInactive
                 }`}
               >
                 Free ({resources.filter(r => r.cost === 'Free').length})
               </button>
               <button
                 onClick={() => setFilter('course')}
-                className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                className={`${styles.filterButton} ${
                   filter === 'course' 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? styles.filterButtonActive
+                    : styles.filterButtonInactive
                 }`}
               >
                 Courses ({resources.filter(r => r.type === 'Course').length})
               </button>
               <button
                 onClick={() => setFilter('certification')}
-                className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                className={`${styles.filterButton} ${
                   filter === 'certification' 
-                    ? 'bg-purple-600 text-white' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? styles.filterButtonActive
+                    : styles.filterButtonInactive
                 }`}
               >
                 Certifications ({resources.filter(r => r.type === 'Certification').length})
               </button>
             </div>
 
-            <div className="flex flex-wrap gap-2">
+            <div className={styles.difficultyButtons}>
               <button
                 onClick={() => setDifficultyFilter('all')}
-                className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                className={`${styles.filterButton} ${
                   difficultyFilter === 'all' 
-                    ? 'bg-emerald-600 text-white' 
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                    ? styles.filterButtonActive
+                    : styles.filterButtonInactive
                 }`}
               >
                 All Levels
@@ -158,10 +158,10 @@ const LearningResources: React.FC<LearningResourcesProps> = ({ resources, classN
                 <button
                   key={difficulty}
                   onClick={() => setDifficultyFilter(difficulty)}
-                  className={`px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                  className={`${styles.filterButton} ${
                     difficultyFilter === difficulty 
-                      ? 'bg-emerald-600 text-white' 
-                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      ? styles.filterButtonActive
+                      : styles.filterButtonInactive
                   }`}
                 >
                   {difficulty}
@@ -170,85 +170,88 @@ const LearningResources: React.FC<LearningResourcesProps> = ({ resources, classN
             </div>
           </div>
         )}
+        <br />
 
         {/* Resources List */}
-        <div className="space-y-4">
+        <div className={styles.resourcesList}>
           {filteredResources.length === 0 && resources.length > 0 && (
-            <div className="text-center py-8 text-gray-500">
-              <BookOpen className="h-12 w-12 mx-auto mb-3 opacity-50" />
-              <p>No resources match your current filters.</p>
-              <p className="text-sm">Try adjusting the filters above.</p>
+            <div className={styles.emptyState}>
+              <div className={styles.emptyStateIcon}></div>
+              <p className={styles.emptyStateText}>No resources match your current filters.</p>
+              <p className={styles.emptyStateSubtext}>Try adjusting the filters above.</p>
             </div>
           )}
 
           {resources.length === 0 && (
-            <div className="text-center py-8 text-gray-500">
-              <BookOpen className="h-12 w-12 mx-auto mb-3 opacity-50" />
-              <p>No learning resources available yet.</p>
-              <p className="text-sm">Resources will be recommended after analysis.</p>
+            <div className={styles.emptyState}>
+              <div className={styles.emptyStateIcon}></div>
+              <p className={styles.emptyStateText}>No learning resources available yet.</p>
+              <p className={styles.emptyStateSubtext}>Resources will be recommended after analysis.</p>
             </div>
           )}
 
           {filteredResources.map((resource, index) => (
-            <div key={index} className="border border-gray-200 rounded-lg p-4 bg-white hover:shadow-md transition-all group">
-              <div className="space-y-3">
+            <div key={index} className={styles.resourceItem}>
+              <div className={styles.resourceContent}>
                 {/* Resource Header */}
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      {getTypeIcon(resource.type)}
-                      <h4 className="font-semibold text-gray-800 group-hover:text-emerald-700 transition-colors">
+                <div className={styles.resourceHeader}>
+                  <div className={styles.resourceInfo}>
+                    <div className={styles.resourceTitleRow}>
+                      <span>{getTypeText(resource.type)}</span>
+                      <h4 className={styles.resourceTitle}>
                         {resource.title}
                       </h4>
-                      <ExternalLink 
-                        className="h-4 w-4 text-gray-400 hover:text-emerald-600 cursor-pointer transition-colors"
+                      <span 
+                        className={styles.externalLink}
                         onClick={() => window.open(resource.url, '_blank')}
-                      />
+                      >
+                        🔗
+                      </span>
                     </div>
-                    <p className="text-sm text-gray-600 mb-2">{resource.description}</p>
-                    <p className="text-xs text-gray-500">by {resource.provider}</p>
+                    <p className={styles.resourceDescription}>{resource.description}</p>
+                    <p className={styles.resourceProvider}>by {resource.provider}</p>
                   </div>
                 </div>
 
                 {/* Resource Details */}
-                <div className="flex flex-wrap gap-2">
+                <div className={styles.resourceDetails}>
                   <Badge className={getTypeColor(resource.type)}>
-                    {getTypeIcon(resource.type)}
-                    <span className="ml-1">{resource.type}</span>
+                    <span>{getTypeText(resource.type)}</span>
+                    <span style={{ marginLeft: '0.25rem' }}>{resource.type}</span>
                   </Badge>
                   <Badge className={getDifficultyColor(resource.difficulty)}>
                     {resource.difficulty}
                   </Badge>
                   <Badge className={getCostColor(resource.cost)}>
-                    <DollarSign className="h-3 w-3 mr-1" />
+                    <span style={{ marginRight: '0.25rem' }}>💰</span>
                     {resource.cost}
                   </Badge>
-                  <Badge variant="outline" className="text-xs">
-                    <Clock className="h-3 w-3 mr-1" />
+                  <Badge className={styles.badgeOutline}>
+                    <span style={{ marginRight: '0.25rem' }}>⏱️</span>
                     {resource.duration}
                   </Badge>
                 </div>
 
                 {/* Rating & Skills */}
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <div className="flex items-center gap-1">
+                <div className={styles.ratingSection}>
+                  <div className={styles.ratingStars}>
+                    <div className={styles.ratingStars}>
                       {renderStars(resource.rating)}
                     </div>
-                    <span className="text-sm text-gray-600">
+                    <span className={styles.ratingText}>
                       {resource.rating.toFixed(1)}
                     </span>
                   </div>
                   
                   {resource.skills.length > 0 && (
-                    <div className="flex flex-wrap gap-1">
+                    <div className={styles.skillsContainer}>
                       {resource.skills.slice(0, 3).map((skill, skillIndex) => (
-                        <Badge key={skillIndex} variant="outline" className="text-xs">
+                        <Badge key={skillIndex} className={styles.skillBadge}>
                           {skill}
                         </Badge>
                       ))}
                       {resource.skills.length > 3 && (
-                        <Badge variant="outline" className="text-xs">
+                        <Badge className={styles.skillBadge}>
                           +{resource.skills.length - 3} more
                         </Badge>
                       )}
@@ -259,10 +262,10 @@ const LearningResources: React.FC<LearningResourcesProps> = ({ resources, classN
                 {/* CTA Button */}
                 <button
                   onClick={() => window.open(resource.url, '_blank')}
-                  className="w-full mt-3 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition-colors text-sm font-medium flex items-center justify-center gap-2"
+                  className={styles.ctaButton}
                 >
                   Start Learning
-                  <ExternalLink className="h-4 w-4" />
+                  <span>🔗</span>
                 </button>
               </div>
             </div>
@@ -271,21 +274,21 @@ const LearningResources: React.FC<LearningResourcesProps> = ({ resources, classN
 
         {/* Summary */}
         {filteredResources.length > 0 && (
-          <div className="mt-6 p-4 bg-gradient-to-r from-emerald-100 to-green-100 rounded-lg border border-emerald-200">
-            <h4 className="font-semibold text-emerald-800 mb-2">Learning Insights</h4>
-            <div className="text-sm text-emerald-700 space-y-1">
+          <div className={styles.summarySection}>
+            <h4 className={styles.summaryTitle}>Learning Insights</h4>
+            <div className={styles.summaryContent}>
               <p>
-                <strong>{resources.filter(r => r.cost === 'Free').length}</strong> free resources available
+                <span className={styles.summaryStrong}>{resources.filter(r => r.cost === 'Free').length}</span> free resources available
               </p>
               <p>
-                <strong>{resources.filter(r => r.type === 'Certification').length}</strong> certification opportunities
+                <span className={styles.summaryStrong}>{resources.filter(r => r.type === 'Certification').length}</span> certification opportunities
               </p>
               <p>
-                Average rating: <strong>
+                Average rating: <span className={styles.summaryStrong}>
                   {(resources.reduce((acc, r) => acc + r.rating, 0) / resources.length).toFixed(1)}
-                </strong> ⭐
+                </span> ⭐
               </p>
-              <p className="text-xs mt-2 text-emerald-600">
+              <p className={styles.summarySubtext}>
                 💡 Start with free resources to build foundation, then pursue paid courses for advanced skills.
               </p>
             </div>

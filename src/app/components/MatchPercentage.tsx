@@ -64,7 +64,8 @@ const MatchPercentageComponent: React.FC<MatchPercentageProps> = ({
     <Card className={`${className} ${styles.container}`}>
       <CardHeader className={styles.header}>
         <div className={styles.headerContent}>
-          <CardTitle className={styles.title}>🎯 CV Match Score</CardTitle>
+          <span className={styles.title}>🎯</span>
+          <CardTitle className={styles.title}>CV Match Score</CardTitle>
         </div>
         <CardDescription className={styles.description}>
           How well you match {suggestedCareer} requirements

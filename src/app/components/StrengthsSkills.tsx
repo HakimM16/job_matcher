@@ -58,7 +58,10 @@ const StrengthsSkills: React.FC<StrengthsSkillsProps> = ({ strengths, className 
   return (
     <Card className={`${className} ${styles.container}`}>
       <CardHeader className={styles.header}>
-        <CardTitle className={styles.title}>Your Strengths & Skills</CardTitle>
+        <div className={styles.headerContent}>
+          <span className={styles.title}>💪</span>
+          <CardTitle className={styles.title}>Your Strengths & Skills</CardTitle>
+        </div>
         <CardDescription className={styles.description}>
           🎉 We found {totalStrengths} awesome things about your profile! Here's what makes you shine:
         </CardDescription>

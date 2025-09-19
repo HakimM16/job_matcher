@@ -242,7 +242,10 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
         <TabsContent value="action">
           <Card className={styles.card}>
             <CardHeader className={styles.cardHeader}>
-              <CardTitle className={styles.cardTitle}>Personalised Action Plan</CardTitle>
+              <div className={styles.headerContent}>
+                <span className={styles.title}>🚀</span>
+                <CardTitle className={styles.cardTitle}>Personalised Action Plan</CardTitle>
+              </div>
               <CardDescription className={styles.cardDescription}>Your roadmap to success</CardDescription>
             </CardHeader>
             <CardContent className={styles.cardContent}>

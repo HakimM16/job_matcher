@@ -48,7 +48,7 @@ const TopCompanies: React.FC<TopCompaniesProps> = ({ companies, className = "" }
     <Card className={`${className} border-purple-200 bg-gradient-to-br from-purple-50 to-pink-50`}>
       <CardHeader className="pb-4">
         <div className="flex items-center gap-2">
-          <Building2 className="h-6 w-6 text-purple-600" />
+          <span className="text-4xl">🏢</span>
           <CardTitle className="text-purple-800">Top Companies Hiring</CardTitle>
         </div>
         <CardDescription className="text-purple-600">

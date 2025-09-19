@@ -55,6 +55,7 @@ const JobMarketDemand: React.FC<JobMarketDemandProps> = ({
     <Card className={`${className} ${styles.container}`}>
       <CardHeader className={styles.header}>
         <div className={styles.headerContent}>
+          <span className={styles.title}>📈</span>
           <CardTitle className={styles.title}>Job Market Demand</CardTitle>
         </div>
         <CardDescription className={styles.description}>
