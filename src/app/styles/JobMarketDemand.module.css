@@ -1,0 +1,322 @@
+/* JobMarketDemand Component Styles */
+
+.container {
+  border: 1px solid #bfdbfe;
+  background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+}
+
+.header {
+  padding-bottom: 1rem;
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.description {
+  color: #2563eb;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Demand Score Section */
+.demandSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.demandHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.demandLabel {
+  font-weight: 600;
+  color: #fff;
+}
+
+.demandScore {
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+.demandScoreHigh {
+  color: #15803d;
+}
+
+.demandScoreMedium {
+  color: #ca8a04;
+}
+
+.demandScoreLow {
+  color: #dc2626;
+}
+
+.progressBar {
+  width: 100%;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  height: 0.75rem;
+}
+
+.progressFill {
+  background: linear-gradient(to right, #3b82f6, #4f46e5);
+  height: 0.75rem;
+  border-radius: 9999px;
+  transition: all 0.5s ease;
+}
+
+.demandDescription {
+  font-size: 1rem;
+  color: #fff;
+}
+
+.demandLevel {
+  font-weight: 600;
+}
+
+/* Key Metrics Grid */
+.metricsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.metricItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.metricHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.metricLabel {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+/* Trend Colors */
+.trendGrowing {
+  color: #16a34a;
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.trendDeclining {
+  color: #dc2626;
+  background-color: #fef2f2;
+  border-color: #fecaca;
+}
+
+.trendStable {
+  color: #ca8a04;
+  background-color: #fffbeb;
+  border-color: #fed7aa;
+}
+
+/* Competition Colors */
+.competitionLow {
+  color: #16a34a;
+  background-color: #f0fdf4;
+  border-color: #bbf7d0;
+}
+
+.competitionHigh {
+  color: #dc2626;
+  background-color: #fef2f2;
+  border-color: #fecaca;
+}
+
+.competitionMedium {
+  color: #ca8a04;
+  background-color: #fffbeb;
+  border-color: #fed7aa;
+}
+
+/* Remote Opportunities Section */
+.remoteSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.remoteHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.remoteLabel {
+  font-weight: 600;
+  color: #fff;
+}
+
+.remoteProgress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.remoteBar {
+  flex: 1;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  height: 0.5rem;
+}
+
+.remoteFill {
+  background: linear-gradient(to right, #22c55e, #10b981);
+  height: 0.5rem;
+  border-radius: 9999px;
+  transition: all 0.5s ease;
+}
+
+.remotePercentage {
+  font-weight: 600;
+  color: #16a34a;
+  font-size: 1rem;
+}
+
+.remoteDescription {
+  font-size: 1rem;
+  color: #fff;
+}
+
+/* Market Insights Section */
+.insightsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.insightsHeader {
+  font-weight: 600;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.insightsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.insightItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: 1rem;
+  color: #fff;
+}
+
+.insightBullet {
+  color: #3b82f6;
+}
+
+/* Region Specific Section */
+.regionSection {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: linear-gradient(to right, #dbeafe, #e0e7ff);
+  border-radius: 0.5rem;
+  border: 1px solid #bfdbfe;
+}
+
+.regionHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.regionTitle {
+  font-weight: 600;
+  color: #1e40af;
+}
+
+.regionGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  font-size: 1rem;
+}
+
+.regionItem {
+  color: #1d4ed8;
+}
+
+.regionValue {
+  font-weight: 600;
+  color: #1e40af;
+  margin-left: 0.5rem;
+}
+
+/* Summary Section */
+.summarySection {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: linear-gradient(to right, #dbeafe, #e0e7ff);
+  border-radius: 0.5rem;
+  border: 1px solid #bfdbfe;
+}
+
+.summaryTitle {
+  font-weight: 600;
+  color: #1e40af;
+  margin-bottom: 0.5rem;
+}
+
+.summaryText {
+  font-size: 1rem;
+  color: #1d4ed8;
+}
+
+.summaryStrong {
+  font-weight: 600;
+}
+
+/* Icon Placeholder Styles */
+.iconPlaceholder {
+  width: 1rem;
+  height: 1rem;
+  background-color: #e08317;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+
+/* Spacing utilities */
+.marginTop {
+  margin-top: 1rem;
+}
+
+.marginBottom {
+  margin-bottom: 1rem;
+}
+
+.padding {
+  padding: 1rem;
+}
+
+.gap {
+  gap: 0.5rem;
+}
+
+.gapLarge {
+  gap: 1rem;
+}

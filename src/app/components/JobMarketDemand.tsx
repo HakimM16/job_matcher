@@ -4,8 +4,8 @@ import React from 'react';
 import { JobMarketData } from '@/types/analysis';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { TrendingUp, TrendingDown, Minus, Globe, Users, MapPin, BarChart3 } from 'lucide-react';
 import { getTrendEmoji } from '@/lib/analysisUtils';
+import styles from '../styles/JobMarketDemand.module.css';
 
 interface JobMarketDemandProps {
   jobMarket: JobMarketData;
@@ -18,129 +18,130 @@ const JobMarketDemand: React.FC<JobMarketDemandProps> = ({
   suggestedCareer,
   className = "" 
 }) => {
-  const getTrendIcon = (trend: string) => {
+  const getTrendText = (trend: string) => {
     switch (trend) {
-      case 'Growing': return <TrendingUp className="h-4 w-4 text-green-600" />;
-      case 'Declining': return <TrendingDown className="h-4 w-4 text-red-600" />;
-      default: return <Minus className="h-4 w-4 text-yellow-600" />;
+      case 'Growing': return '↗';
+      case 'Declining': return '↘';
+      default: return '→';
     }
   };
 
   const getTrendColor = (trend: string) => {
     switch (trend) {
-      case 'Growing': return 'text-green-600 bg-green-50 border-green-200';
-      case 'Declining': return 'text-red-600 bg-red-50 border-red-200';
-      default: return 'text-yellow-600 bg-yellow-50 border-yellow-200';
+      case 'Growing': return styles.trendGrowing;
+      case 'Declining': return styles.trendDeclining;
+      default: return styles.trendStable;
     }
   };
 
   const getCompetitionColor = (level: string) => {
     switch (level) {
-      case 'Low': return 'text-green-600 bg-green-50 border-green-200';
-      case 'High': return 'text-red-600 bg-red-50 border-red-200';
-      default: return 'text-yellow-600 bg-yellow-50 border-yellow-200';
+      case 'Low': return styles.competitionLow;
+      case 'High': return styles.competitionHigh;
+      default: return styles.competitionMedium;
     }
   };
 
   const getDemandLevel = (score: number) => {
-    if (score >= 80) return { level: 'Very High', color: 'text-green-700' };
-    if (score >= 60) return { level: 'High', color: 'text-green-600' };
-    if (score >= 40) return { level: 'Moderate', color: 'text-yellow-600' };
-    return { level: 'Low', color: 'text-red-600' };
+    if (score >= 80) return { level: 'Very High', color: styles.demandScoreHigh };
+    if (score >= 60) return { level: 'High', color: styles.demandScoreHigh };
+    if (score >= 40) return { level: 'Moderate', color: styles.demandScoreMedium };
+    return { level: 'Low', color: styles.demandScoreLow };
   };
 
   const demandLevel = getDemandLevel(jobMarket.demandScore);
 
   return (
-    <Card className={`${className} border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50`}>
-      <CardHeader className="pb-4">
-        <div className="flex items-center gap-2">
-          <BarChart3 className="h-6 w-6 text-blue-600" />
-          <CardTitle className="text-blue-800">Job Market Demand</CardTitle>
+    <Card className={`${className} ${styles.container}`}>
+      <CardHeader className={styles.header}>
+        <div className={styles.headerContent}>
+          <CardTitle className={styles.title}>Job Market Demand</CardTitle>
         </div>
-        <CardDescription className="text-blue-600">
+        <CardDescription className={styles.description}>
           Market insights for {suggestedCareer} {getTrendEmoji(jobMarket.trend)}
         </CardDescription>
       </CardHeader>
       
-      <CardContent className="space-y-6">
+      <CardContent className={styles.content}>
         {/* Demand Score */}
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <span className="font-semibold text-gray-700">Market Demand</span>
-            <span className={`font-bold text-2xl ${demandLevel.color}`}>
+        <div className={styles.demandSection}>
+          <div className={styles.demandHeader}>
+            <span className={styles.demandLabel}>Market Demand</span>
+            <span className={`${styles.demandScore} ${demandLevel.color}`}>
               {jobMarket.demandScore}/100
             </span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-3">
+          <div className={styles.progressBar}>
             <div 
-              className="bg-gradient-to-r from-blue-500 to-indigo-600 h-3 rounded-full transition-all duration-500"
+              className={styles.progressFill}
               style={{ width: `${jobMarket.demandScore}%` }}
             />
           </div>
-          <p className="text-sm text-gray-600">
-            <span className={`font-semibold ${demandLevel.color}`}>
+          <p className={styles.demandDescription}>
+            <span className={`${styles.demandLevel} ${demandLevel.color}`}>
               {demandLevel.level}
             </span> demand in the current market
           </p>
         </div>
+        <br />
 
         {/* Key Metrics */}
-        <div className="grid grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              {getTrendIcon(jobMarket.trend)}
-              <span className="text-sm font-medium text-gray-700">Growth Trend</span>
+        <div className={styles.metricsGrid}>
+          <div className={styles.metricItem}>
+            <div className={styles.metricHeader}>
+              <span className={styles.iconPlaceholder}></span>
+              <span className={styles.metricLabel}>Growth Trend</span>
             </div>
             <Badge className={getTrendColor(jobMarket.trend)}>
-              {jobMarket.trend} (+{jobMarket.growthRate}%)
+              {getTrendText(jobMarket.trend)} {jobMarket.trend} (+{jobMarket.growthRate}%)
             </Badge>
           </div>
 
-          <div className="space-y-2">
-            <div className="flex items-center gap-2">
-              <Users className="h-4 w-4 text-gray-600" />
-              <span className="text-sm font-medium text-gray-700">Competition</span>
+          <div className={styles.metricItem}>
+            <div className={styles.metricHeader}>
+              <span className={styles.iconPlaceholder}></span>
+              <span className={styles.metricLabel}>Competition</span>
             </div>
             <Badge className={getCompetitionColor(jobMarket.competitionLevel)}>
               {jobMarket.competitionLevel} Competition
             </Badge>
           </div>
         </div>
+        <br />
 
         {/* Remote Opportunities */}
-        <div className="space-y-3">
-          <div className="flex items-center gap-2">
-            <Globe className="h-4 w-4 text-gray-600" />
-            <span className="font-semibold text-gray-700">Remote Work Opportunities</span>
+        <div className={styles.remoteSection}>
+          <div className={styles.remoteHeader}>
+            <span className={styles.iconPlaceholder}></span>
+            <span className={styles.remoteLabel}>Remote Work Opportunities</span>
           </div>
-          <div className="flex items-center gap-3">
-            <div className="flex-1 bg-gray-200 rounded-full h-2">
+          <div className={styles.remoteProgress}>
+            <div className={styles.remoteBar}>
               <div 
-                className="bg-gradient-to-r from-green-500 to-emerald-600 h-2 rounded-full transition-all duration-500"
+                className={styles.remoteFill}
                 style={{ width: `${jobMarket.remoteOpportunities}%` }}
               />
             </div>
-            <span className="font-semibold text-green-600 text-sm">
+            <span className={styles.remotePercentage}>
               {jobMarket.remoteOpportunities}%
             </span>
           </div>
-          <p className="text-sm text-gray-600">
+          <p className={styles.remoteDescription}>
             of {suggestedCareer} positions offer remote work options
           </p>
         </div>
 
         {/* Market Insights */}
         {jobMarket.marketInsights && jobMarket.marketInsights.length > 0 && (
-          <div className="space-y-3">
-            <h4 className="font-semibold text-gray-800 flex items-center gap-2">
-              <MapPin className="h-4 w-4" />
+          <div className={styles.insightsSection}>
+            <h4 className={styles.insightsHeader}>
+              <span className={styles.iconPlaceholder}></span>
               Market Insights
             </h4>
-            <div className="space-y-2">
+            <div className={styles.insightsList}>
               {jobMarket.marketInsights.map((insight, index) => (
-                <div key={index} className="flex items-start gap-2 text-sm text-gray-600">
-                  <span className="text-blue-500 mt-1">•</span>
+                <div key={index} className={styles.insightItem}>
+                  <span className={styles.insightBullet}>•</span>
                   <span>{insight}</span>
                 </div>
               ))}
@@ -150,21 +151,21 @@ const JobMarketDemand: React.FC<JobMarketDemandProps> = ({
 
         {/* Region Specific Data */}
         {jobMarket.regionSpecific && (
-          <div className="mt-6 p-4 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-lg border border-blue-200">
-            <div className="flex items-center gap-2 mb-2">
-              <MapPin className="h-5 w-5 text-blue-600" />
-              <span className="font-semibold text-blue-800">Regional Data: {jobMarket.regionSpecific.location}</span>
+          <div className={styles.regionSection}>
+            <div className={styles.regionHeader}>
+              <span className={styles.iconPlaceholder}></span>
+              <span className={styles.regionTitle}>Regional Data: {jobMarket.regionSpecific.location}</span>
             </div>
-            <div className="grid grid-cols-2 gap-4 text-sm">
-              <div>
-                <span className="text-blue-700">Local Demand:</span>
-                <span className="font-semibold text-blue-800 ml-2">
+            <div className={styles.regionGrid}>
+              <div className={styles.regionItem}>
+                <span>Local Demand:</span>
+                <span className={styles.regionValue}>
                   {jobMarket.regionSpecific.localDemand}/100
                 </span>
               </div>
-              <div>
-                <span className="text-blue-700">Avg. Salary:</span>
-                <span className="font-semibold text-blue-800 ml-2">
+              <div className={styles.regionItem}>
+                <span>Avg. Salary:</span>
+                <span className={styles.regionValue}>
                   {jobMarket.regionSpecific.averageSalary.currency}{jobMarket.regionSpecific.averageSalary.mid.toLocaleString()}
                 </span>
               </div>
@@ -173,15 +174,15 @@ const JobMarketDemand: React.FC<JobMarketDemandProps> = ({
         )}
 
         {/* Summary */}
-        <div className="mt-6 p-4 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-lg border border-blue-200">
-          <h4 className="font-semibold text-blue-800 mb-2">Market Summary</h4>
-          <p className="text-sm text-blue-700">
-            The market for {suggestedCareer} shows <strong>{demandLevel.level.toLowerCase()}</strong> demand 
-            with a <strong>{jobMarket.trend.toLowerCase()}</strong> trend. 
-            Competition is <strong>{jobMarket.competitionLevel.toLowerCase()}</strong>, and 
-            <strong> {jobMarket.remoteOpportunities}%</strong> of positions offer remote work flexibility.
+        <div className={styles.summarySection}>
+          <h4 className={styles.summaryTitle}>Market Summary</h4>
+          <p className={styles.summaryText}>
+            The market for {suggestedCareer} shows <span className={styles.summaryStrong}>{demandLevel.level.toLowerCase()}</span> demand 
+            with a <span className={styles.summaryStrong}>{jobMarket.trend.toLowerCase()}</span> trend. 
+            Competition is <span className={styles.summaryStrong}>{jobMarket.competitionLevel.toLowerCase()}</span>, and 
+            <span className={styles.summaryStrong}> {jobMarket.remoteOpportunities}%</span> of positions offer remote work flexibility.
             {jobMarket.growthRate > 0 && (
-              <> The field is growing at <strong>{jobMarket.growthRate}%</strong> annually.</>
+              <> The field is growing at <span className={styles.summaryStrong}>{jobMarket.growthRate}%</span> annually.</>
             )}
           </p>
         </div>
