@@ -43,6 +43,7 @@ export async function POST(req: Request) {
     3. Any skill gaps or areas for improvement for this path.
     4. Actionable next steps for pursuing this career.
   - Ensure your output is practical, specific, and tailored to the candidate's actual CV content.
+  - Give realistic scores for demandScore, growthRate and remoteOpportunities based on current market data for the suggested career.
 IMPORTANT: Calculate ALL percentages, scores, and ratings based on the actual CV content. Do NOT use the example values below. Analyze the candidate's experience, skills, education, and background to determine realistic match percentages, skill gaps, market demand scores, and all other metrics.
 
 Keep everything practical, encouraging, and specific to the candidate's profile.
