@@ -25,45 +25,55 @@ export async function POST(req: Request) {
       return new Response('API key not configured', { status: 500 });
     }
  
-   //  console.log('About to call Mistral API with model: open-mistral-7b');
-   //  console.log('API Key exists:', !!process.env.MISTRAL_API_KEY);
-   //  console.log('API Key length:', process.env.MISTRAL_API_KEY?.length);
-
-   //  // Test if API key works with a simple call first
-   //  try {
-   //    console.log('Testing Mistral API connection...');
-   //    const testResponse = await mistral.chat({
-   //      model: 'open-mistral-7b',
-   //      messages: [{ role: 'user', content: 'Hello' }],
-   //    });
-   //    console.log('Test response received:', !!testResponse);
-   //  } catch (testError: any) {
-   //    console.error('Mistral API test failed:', testError);
-   //    return new Response(`Mistral API error: ${testError?.message || 'Unknown error'}`, { status: 500 });
-   //  }
- 
     const response = await mistral.chatStream({
     model: 'open-mistral-7b',
     messages: [{ 
       role: 'user',
       content: `CONTEXT: You are a comprehensive career coach, labor market analyst, and professional development expert.
-You provide detailed, actionable career guidance with personality, market insights, and concrete next steps.
-You are encouraging, witty, and practical - like a mentor who truly wants to see someone succeed.
--------
-TASK: 
-Analyze the resume below and provide a comprehensive career analysis including:
+  Your task is to analyze the provided CV and, based on the candidate's skills, education, and experience, determine and return the single most highly matched career path in tech. Your analysis must prioritize the strongest alignment between the candidate's background and specific tech roles, considering all relevant CV sections (skills, education, experience).
 
-1. CORE ANALYSIS: Suggested career, overall match percentage, key strengths
-2. ENHANCED INSIGHTS: Market demand, cultural fit, alternative paths, learning resources
-3. ACTIONABLE GUIDANCE: Personalized action plan, networking opportunities, resume feedback
-4. MOTIVATION: Positive reinforcement and clear next steps
+  INSTRUCTIONS:
+  - Carefully review the candidate's skills, education, and experience sections.
+  - Identify the tech career path that most closely matches the candidate's qualifications, strengths, and potential.
+  - Justify your choice by referencing specific skills, educational background, and relevant experience from the CV.
+  - Do not suggest multiple careers; focus on the one best-matched tech path.
+  - Provide a comprehensive analysis including:
+    1. The most highly matched tech career path and why it fits best.
+    2. Key strengths and qualifications that support this match.
+    3. Any skill gaps or areas for improvement for this path.
+    4. Actionable next steps for pursuing this career.
+  - Ensure your output is practical, specific, and tailored to the candidate's actual CV content.
+IMPORTANT: Calculate ALL percentages, scores, and ratings based on the actual CV content. Do NOT use the example values below. Analyze the candidate's experience, skills, education, and background to determine realistic match percentages, skill gaps, market demand scores, and all other metrics.
 
 Keep everything practical, encouraging, and specific to the candidate's profile.
+CAREER MATCHING LOGIC - FOLLOW THIS PRIORITY:
+1. Educational Background Matching:
+   - Mathematics/Statistics/Physics → Data Scientist, ML Engineer, Quantitative Analyst
+   - Computer Science/Software Engineering → Software Developer, DevOps Engineer, Systems Engineer
+   - Business/Economics/Finance → Product Manager, Business Analyst, Technical Consultant
+   - Psychology/Design/Arts → UX/UI Designer, User Researcher, Creative Technologist
+   - Biology/Chemistry/Research → Bioinformatics, Research Software Engineer, Data Analyst
+   - Engineering (non-CS) → Technical Product Manager, Systems Engineer, Solutions Architect
+
+2. Skills-Based Matching (if education unclear):
+   - Programming languages → Software Developer roles matching the languages
+   - Data analysis/Statistics → Data roles (Scientist, Analyst, Engineer)
+   - Design tools → Design roles (UX/UI, Graphic, Web Design)
+   - Project management → Product Manager, Technical Project Manager
+
+3. Experience-Based Matching:
+   - Previous tech experience → Build upon existing experience
+   - Research experience → Data Science, Research Engineer
+   - Teaching/Training → Developer Relations, Technical Writing
+   - Sales/Customer service → Technical Sales, Customer Success
+
+IMPORTANT: The suggested career MUST align with the candidate's strongest qualifications, not default to generic "Software Developer"
+
 -------
 RESUME:
 ${prompt}
 -------
-OUTPUT FORMAT (STRICT JSON):
+OUTPUT FORMAT (STRICT JSON - CALCULATE ALL VALUES BASED ON ACTUAL CV ANALYSIS):
 {
   "suggestedCareer": "specific job title",
   "matchPercentage": {

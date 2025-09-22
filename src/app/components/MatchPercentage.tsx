@@ -178,6 +178,7 @@ const MatchPercentageComponent: React.FC<MatchPercentageProps> = ({
             )}
           </div>
         </div>
+        <br/>
 
         {/* Match Summary */}
         <div className={styles.matchSummary}>

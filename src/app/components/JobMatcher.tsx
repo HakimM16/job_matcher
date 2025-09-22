@@ -107,34 +107,54 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
                 suggestedCareer={analysis.suggestedCareer}
               />
             )}
-            <br/>
 
-            {/* Legacy Skill Gap Analysis */}
+            {/* Career Path Explanation */}
             <Card className={styles.card}>
               <CardHeader className={styles.cardHeader}>
-                <CardTitle className={styles.cardTitle}>Skill Gap Analysis</CardTitle>
-                <CardDescription className={styles.cardDescription}>What to level up next</CardDescription>
+                <CardTitle className={styles.cardTitle}>Why This Career Path?</CardTitle>
+                <CardDescription className={styles.cardDescription}>Analysis behind the recommendation</CardDescription>
               </CardHeader>
               <CardContent className={styles.cardContent}>
-                {analysis.skillGaps && analysis.skillGaps.length > 0 ? (
-                  <ul className={styles.list}>
-                    {analysis.skillGaps.map((gap, index) => (
-                      <li key={index} className={styles.listItem}>
-                        <div className="flex justify-between items-start">
-                          <span className="font-semibold">{gap.skill}</span>
-                          <span className={`${styles.importance} ${gap.importance === 'High' ? styles.high : gap.importance === 'Medium' ? styles.medium : styles.low}`}>
-                            {gap.importance}
-                          </span>
-                        </div>
-                        <div className={`${styles.mutedText} mt-1`}>
-                          {gap.description} • {gap.timeToLearn}
-                        </div>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="text-gray-500">No specific skill gaps identified.</p>
-                )}
+                <div className="space-y-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                      <span className="text-blue-600 font-semibold text-sm">1</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Skills Alignment</h4>
+                      <p className="text-gray-600 text-sm">
+                        Your technical background shows strong compatibility with {analysis.suggestedCareer} requirements, 
+                        with particular strengths in areas that are highly valued in this field.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
+                      <span className="text-green-600 font-semibold text-sm">2</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Market Opportunity</h4>
+                      <p className="text-gray-600 text-sm">
+                        The {analysis.suggestedCareer} field is experiencing strong growth with increasing demand for skilled professionals, 
+                        making it an excellent time to pursue this career path.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-start space-x-3">
+                    <div className="flex-shrink-0 w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                      <span className="text-purple-600 font-semibold text-sm">3</span>
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900 mb-1">Career Progression</h4>
+                      <p className="text-gray-600 text-sm">
+                        This path offers clear advancement opportunities and aligns with your professional goals, 
+                        providing a solid foundation for long-term career growth.
+                      </p>
+                    </div>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
@@ -274,12 +294,12 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
                     </div>
                   )}
                   
-                  {analysis.actionPlan.quickWins.length > 0 && (
+                  {analysis.actionPlan.quickWins && Array.isArray(analysis.actionPlan.quickWins) && analysis.actionPlan.quickWins.length > 0 && (
                     <div className={styles.quickWinsSection}>
                       <h4 className={styles.quickWinsTitle}>Quick Wins</h4>
                       <div className={styles.quickWinsGrid}>
                         {analysis.actionPlan.quickWins.map((win, index) => (
-                          <div key={win.id} className={styles.quickWinCard}>
+                          <div key={win.id || index} className={styles.quickWinCard}>
                             <h5 className={styles.quickWinTitle}>{win.title}</h5>
                             <p className={styles.quickWinDescription}>{win.description}</p>
                           </div>
