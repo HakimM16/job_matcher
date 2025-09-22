@@ -44,7 +44,7 @@ export async function POST(req: Request) {
     4. Actionable next steps for pursuing this career.
   - Ensure your output is practical, specific, and tailored to the candidate's actual CV content.
   - Give realistic scores for demandScore, growthRate and remoteOpportunities based on current market data for the suggested career.
-  - For topCompanies, suggest 3 companies that are actively hiring for the suggested career path.
+  - For topCompanies, suggest 3 companies that are actively hiring for the suggested career path and their benefits must be UK based.
   - Give realistic percentages and scores for cultural fit based on the candidate's personality traits and preferences.
 IMPORTANT: Calculate ALL percentages, scores, and ratings based on the actual CV content. Do NOT use the example values below. Analyze the candidate's experience, skills, education, and background to determine realistic match percentages, skill gaps, market demand scores, and all other metrics.
 

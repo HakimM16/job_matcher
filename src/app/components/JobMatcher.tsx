@@ -75,12 +75,6 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
       <div className="mb-8 text-center">
         <div className={styles.worth}>{analysis.suggestedCareer}</div>
         <p className={styles.subtitle}>Recommended career path</p>
-        
-        {analysis.matchPercentage && (
-          <p className={`${styles.matchText} mt-4`}>
-            <span className={styles.matchValue}>{analysis.matchPercentage.overall}%</span> match
-          </p>
-        )}
       </div>
       <br />
 
@@ -107,7 +101,7 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
                 suggestedCareer={analysis.suggestedCareer}
               />
             )}
-
+            <br/>
             {/* Career Path Explanation */}
             <Card className={styles.card}>
               <CardHeader className={styles.cardHeader}>
@@ -115,40 +109,40 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
                 <CardDescription className={styles.cardDescription}>Analysis behind the recommendation</CardDescription>
               </CardHeader>
               <CardContent className={styles.cardContent}>
-                <div className="space-y-4">
-                  <div className="flex items-start space-x-3">
-                    <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                      <span className="text-blue-600 font-semibold text-sm">1</span>
+                <div className={styles.careerPathExplanation}>
+                  <div className={styles.explanationStep}>
+                    <div className={`${styles.stepNumber} ${styles.stepNumberBlue}`}>
+                      <span>1</span>
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Skills Alignment</h4>
-                      <p className="text-gray-600 text-sm">
-                        Your technical background shows strong compatibility with {analysis.suggestedCareer} requirements, 
+                    <div className={styles.stepContent}>
+                      <h4 className={styles.stepTitle}>Skills Alignment</h4>
+                      <p className={styles.stepDescription}>
+                        Your technical background shows strong compatibility with <span className={styles.careerPathHighlight}>{analysis.suggestedCareer}</span> requirements, 
                         with particular strengths in areas that are highly valued in this field.
                       </p>
                     </div>
                   </div>
                   
-                  <div className="flex items-start space-x-3">
-                    <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                      <span className="text-green-600 font-semibold text-sm">2</span>
+                  <div className={styles.explanationStep}>
+                    <div className={`${styles.stepNumber} ${styles.stepNumberGreen}`}>
+                      <span>2</span>
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Market Opportunity</h4>
-                      <p className="text-gray-600 text-sm">
-                        The {analysis.suggestedCareer} field is experiencing strong growth with increasing demand for skilled professionals, 
+                    <div className={styles.stepContent}>
+                      <h4 className={styles.stepTitle}>Market Opportunity</h4>
+                      <p className={styles.stepDescription}>
+                        The <span className={styles.careerPathHighlight}>{analysis.suggestedCareer}</span> field is experiencing strong growth with increasing demand for skilled professionals, 
                         making it an excellent time to pursue this career path.
                       </p>
                     </div>
                   </div>
                   
-                  <div className="flex items-start space-x-3">
-                    <div className="flex-shrink-0 w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
-                      <span className="text-purple-600 font-semibold text-sm">3</span>
+                  <div className={styles.explanationStep}>
+                    <div className={`${styles.stepNumber} ${styles.stepNumberPurple}`}>
+                      <span>3</span>
                     </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-900 mb-1">Career Progression</h4>
-                      <p className="text-gray-600 text-sm">
+                    <div className={styles.stepContent}>
+                      <h4 className={styles.stepTitle}>Career Progression</h4>
+                      <p className={styles.stepDescription}>
                         This path offers clear advancement opportunities and aligns with your professional goals, 
                         providing a solid foundation for long-term career growth.
                       </p>
