@@ -46,6 +46,7 @@ export async function POST(req: Request) {
   - Give realistic scores for demandScore, growthRate and remoteOpportunities based on current market data for the suggested career.
   - For topCompanies, suggest 3 companies that are actively hiring for the suggested career path and their benefits must be UK based.
   - Give realistic percentages and scores for cultural fit based on the candidate's personality traits and preferences.
+  - For learningResources, suggest resources that are highly rated (4.5+), relevant to the suggested career, and suitable for the candidate's skill level and the links must be to a google search page for the company course page. e.g. https://www.google.com/search?q=coursera/course/xyz, not to specific course pages. e.g. https://coursera.org/course/xyz.
 IMPORTANT: Calculate ALL percentages, scores, and ratings based on the actual CV content. Do NOT use the example values below. Analyze the candidate's experience, skills, education, and background to determine realistic match percentages, skill gaps, market demand scores, and all other metrics.
 
 Keep everything practical, encouraging, and specific to the candidate's profile.
@@ -130,7 +131,7 @@ OUTPUT FORMAT (STRICT JSON - CALCULATE ALL VALUES BASED ON ACTUAL CV ANALYSIS):
       "difficulty": "Intermediate",
       "cost": "Paid",
       "rating": 4.8,
-      "url": "https://coursera.org/course",
+      "url": "https://www.google.com/search?q=coursera/course/xyz",
       "description": "Comprehensive JS course",
       "skills": ["JavaScript", "ES6", "DOM"]
     }

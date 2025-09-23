@@ -264,7 +264,7 @@ const LearningResources: React.FC<LearningResourcesProps> = ({ resources, classN
                   onClick={() => window.open(resource.url, '_blank')}
                   className={styles.ctaButton}
                 >
-                  Start Learning
+                  Search on Google
                   <span>🔗</span>
                 </button>
               </div>
