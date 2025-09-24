@@ -12,7 +12,7 @@ const ResumeAnalyser = () => {
   const [resumeText, setResumeText] = useState<string>('');
   const [mockMode, setMockMode] = useState(false);
   const { completion, isLoading, complete, error } = useCompletion({
-    api: '/api/matcher',
+    api: '/api/matcher-openai',
   });
 
   useEffect(() => {
@@ -60,7 +60,7 @@ const ResumeAnalyser = () => {
           <br/>
           
           {/* Demo Button */}
-          <div className="mt-4 text-center">
+          {/* <div className="mt-4 text-center">
             <button
               onClick={handleMockDemo}
               className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium shadow-md cursor-pointer"
@@ -70,7 +70,7 @@ const ResumeAnalyser = () => {
             <p className="text-xs text-gray-500 mt-2">
               See all the new features with sample analysis data
             </p>
-          </div>
+          </div> */}
           
           {(isLoadingResume || isLoading) && 
             <div className={styles.loadingContainer}>

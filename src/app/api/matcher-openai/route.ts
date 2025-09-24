@@ -1,12 +1,14 @@
-// This is where the mistral api route is defined.
-import MistralClient from '@mistralai/mistralai';
-import { MistralStream, StreamingTextResponse } from 'ai';
+// This is where the OpenAI API route is defined.
+import OpenAI from 'openai';
+import { OpenAIStream, StreamingTextResponse } from 'ai';
 import { ComprehensiveAnalysis } from '@/types/analysis';
- 
-const mistral = new MistralClient(process.env.MISTRAL_API_KEY || '');
- 
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY || '',
+});
+
 export const runtime = 'edge';
- 
+
 export async function POST(req: Request) {
   try {
     const body = await req.json();
@@ -20,16 +22,16 @@ export async function POST(req: Request) {
       return new Response('No prompt provided', { status: 400 });
     }
 
-    if (!process.env.MISTRAL_API_KEY) {
-      console.error('MISTRAL_API_KEY not found in environment variables');
+    if (!process.env.OPENAI_API_KEY) {
+      console.error('OPENAI_API_KEY not found in environment variables');
       return new Response('API key not configured', { status: 500 });
     }
- 
-    const response = await mistral.chatStream({
-    model: 'open-mistral-7b',
-    messages: [{ 
-      role: 'user',
-      content: `CONTEXT: You are a comprehensive career coach, labor market analyst, and professional development expert.
+
+    const response = await openai.chat.completions.create({
+      model: 'gpt-4o',
+      messages: [{ 
+        role: 'user',
+        content: `CONTEXT: You are a comprehensive career coach, labor market analyst, and professional development expert.
   Your task is to analyze the provided CV and, based on the candidate's skills, education, and experience, determine and return the single most highly matched career path in tech. Your analysis must prioritize the strongest alignment between the candidate's background and specific tech roles, considering all relevant CV sections (skills, education, experience).
 
   INSTRUCTIONS:
@@ -275,23 +277,19 @@ OUTPUT FORMAT (STRICT JSON - CALCULATE ALL VALUES BASED ON ACTUAL CV ANALYSIS):
     "Attend networking events"
   ]
 }`
-    }],
-  });
-  
-//   console.log('Mistral response received:', !!response);
-//   console.log('Response type:', typeof response);
-  
-  if (!response) {
-    console.error('Mistral API returned null/undefined response');
-    return new Response('Mistral API returned empty response', { status: 500 });
-  }
- 
-  const stream = MistralStream(response);
-  //console.log('Stream created:', !!stream);
- 
-  return new StreamingTextResponse(stream);
+      }],
+      stream: true,
+    });
+    
+    if (!response) {
+      console.error('OpenAI API returned null/undefined response');
+      return new Response('OpenAI API returned empty response', { status: 500 });
+    }
+
+    const stream = OpenAIStream(response);
+    return new StreamingTextResponse(stream);
   } catch (error) {
-    console.error('Error in API route:', error);
+    console.error('Error in OpenAI API route:', error);
     return new Response('Internal server error', { status: 500 });
   }
 }
