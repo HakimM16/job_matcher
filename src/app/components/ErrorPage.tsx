@@ -94,6 +94,7 @@ const ErrorPage: React.FC<ErrorPageProps> = ({
                   Need help? Make sure your resume:
                 </p>
                 <ul className={styles.helpList}>
+                  <li className={styles.helpListItem}>• Has resume/cv in the file name</li>
                   <li className={styles.helpListItem}>• Contains clear job titles and descriptions</li>
                   <li className={styles.helpListItem}>• Lists your skills and experience</li>
                   <li className={styles.helpListItem}>• Is in PDF format</li>

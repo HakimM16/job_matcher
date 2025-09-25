@@ -104,7 +104,9 @@ const ResumeAnalyser = () => {
             setIsLoading={setIsLoadingResume} 
             setResumeText={setResumeText}
             onResumeValidation={(isValid, errorMessage) => {
+              console.log('Resume validation result:', { isValid, errorMessage });
               if (!isValid) {
+                console.log('Setting error state for invalid document');
                 setErrorType('invalid-document');
                 setErrorMessage(errorMessage || 'Invalid document type');
                 setHasError(true);
