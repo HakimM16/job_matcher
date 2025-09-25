@@ -1,7 +1,6 @@
 // This is where the mistral api route is defined.
 import MistralClient from '@mistralai/mistralai';
 import { MistralStream, StreamingTextResponse } from 'ai';
-import { ComprehensiveAnalysis } from '@/types/analysis';
  
 const mistral = new MistralClient(process.env.MISTRAL_API_KEY || '');
  

@@ -12,23 +12,6 @@ interface CulturalFitProps {
 }
 
 const CulturalFit: React.FC<CulturalFitProps> = ({ culturalFit, className = "" }) => {
-  const getScoreColor = (score: number) => {
-    if (score >= 80) return 'green';
-    if (score >= 60) return 'blue';
-    if (score >= 40) return 'yellow';
-    return 'red';
-  };
-
-  const getEnvironmentIcon = (env: string) => {
-    switch (env) {
-      case 'Startup': return '🚀';
-      case 'Corporate': return '🏢';
-      case 'Agency': return '⚡';
-      case 'Consultancy': return '💼';
-      case 'Non-profit': return '🌱';
-      default: return '🏢';
-    }
-  };
 
   const getRiskIcon = (risk: string) => {
     switch (risk) {
@@ -174,7 +157,7 @@ const CulturalFit: React.FC<CulturalFitProps> = ({ culturalFit, className = "" }
             <div className={styles.environmentRecommendationItem}>
               <span className={styles.environmentRecommendationBullet}>•</span>
               <div className={styles.environmentRecommendationText}>
-                <span className={styles.environmentRecommendationStrong}>Best Match:</span> You're most aligned with{' '}
+                <span className={styles.environmentRecommendationStrong}>Best Match:</span> You&apos;re most aligned with{' '}
                 <span className={styles.environmentRecommendationStrong}>{topEnvironment.name.toLowerCase()}</span> environments
                 ({topEnvironment.score}% compatibility)
               </div>
@@ -201,7 +184,7 @@ const CulturalFit: React.FC<CulturalFitProps> = ({ culturalFit, className = "" }
               <div className={styles.environmentRecommendationItem}>
                 <span className={styles.environmentRecommendationBullet}>•</span>
                 <div className={styles.environmentRecommendationText}>
-                  <span className={styles.environmentRecommendationStrong}>Risk Preference:</span> You're comfortable with{' '}
+                  <span className={styles.environmentRecommendationStrong}>Risk Preference:</span> You&apos;re comfortable with{' '}
                   <span className={styles.environmentRecommendationStrong}>{culturalFit.riskTolerance.toLowerCase()}</span> risk levels
                 </div>
               </div>

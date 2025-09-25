@@ -74,7 +74,7 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading }) => {
         throw new Error("The PDF wasn't uploaded correctly.");
       }
       await readResume(file);
-    } catch (error) {
+    } catch {
       setError('There was an error reading the resume. Please try again.');
     }
   };
@@ -107,7 +107,7 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading }) => {
         return;
       }
       await readResume(file);
-    } catch (error) {
+    } catch {
       setError('There was an error reading the resume. Please try again.');
     }
   };

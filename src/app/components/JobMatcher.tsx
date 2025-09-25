@@ -269,7 +269,7 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
                     <div className={styles.actionPlanPhase}>
                       <h4 className={styles.actionPlanPhaseTitle}>Phase 1: Next 3 Months</h4>
                       <div className={styles.actionPlanPhaseContent}>
-                        {analysis.actionPlan.phase1.map((step, index) => (
+                        {analysis.actionPlan.phase1.map((step) => (
                           <div key={step.id} className={styles.actionPlanStep}>
                             <div className={styles.actionPlanStepHeader}>
                               <h5 className={styles.actionPlanStepTitle}>{step.title}</h5>

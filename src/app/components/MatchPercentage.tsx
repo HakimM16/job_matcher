@@ -34,7 +34,7 @@ const MatchPercentageComponent: React.FC<MatchPercentageProps> = ({
     if (score >= 80) return { emoji: '🎉', message: 'Excellent match!' };
     if (score >= 60) return { emoji: '👍', message: 'Good match' };
     if (score >= 40) return { emoji: '📈', message: 'Room for growth' };
-    return { emoji: '💪', message: 'Let\'s build those skills!' };
+    return { emoji: '💪', message: 'Let&apos;s build those skills!' };
   };
 
   const categories = [
@@ -106,7 +106,7 @@ const MatchPercentageComponent: React.FC<MatchPercentageProps> = ({
               {overallMessage.emoji} {overallMessage.message}
             </div>
             <p className={styles.messageSubtitle}>
-              You're {matchPercentage.overall >= 70 ? 'well-positioned' : 'on your way'} for this role
+              You&apos;re {matchPercentage.overall >= 70 ? 'well-positioned' : 'on your way'} for this role
             </p>
           </div>
         </div>

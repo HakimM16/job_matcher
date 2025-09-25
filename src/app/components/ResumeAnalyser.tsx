@@ -11,7 +11,7 @@ const ResumeAnalyser = () => {
   const [isLoadingResume, setIsLoadingResume] = useState(false);
   const [resumeText, setResumeText] = useState<string>('');
   const [mockMode, setMockMode] = useState(false);
-  const { completion, isLoading, complete, error } = useCompletion({
+  const { completion, isLoading, complete } = useCompletion({
     api: '/api/matcher',
   });
 
@@ -19,7 +19,6 @@ const ResumeAnalyser = () => {
     const getResumeInfo = async (text: string) => {
       if (mockMode) {
         // Use mock data for testing
-        const mockAnalysis = generateMockAnalysis();
         setTimeout(() => {
           setShowInfo(true);
           setIsLoadingResume(false);
@@ -36,13 +35,8 @@ const ResumeAnalyser = () => {
     if (resumeText !== '') {
       getResumeInfo(resumeText).then();
     }
-  }, [resumeText, mockMode]);
+  }, [resumeText, mockMode, complete]);
 
-  const handleMockDemo = () => {
-    setMockMode(true);
-    setResumeText('mock-demo-data');
-    setIsLoadingResume(true);
-  };
 
   const getCurrentAnalysis = () => {
     if (mockMode) {
@@ -97,7 +91,6 @@ const ResumeAnalyser = () => {
           </div>
         </div>
       )}
-      {error && <p className={styles.errorMessage}>{error.message}</p>}
      
     </div>
   );
