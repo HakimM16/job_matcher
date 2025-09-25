@@ -12,7 +12,7 @@ const ResumeAnalyser = () => {
   const [resumeText, setResumeText] = useState<string>('');
   const [mockMode, setMockMode] = useState(false);
   const { completion, isLoading, complete, error } = useCompletion({
-    api: '/api/matcher-openai',
+    api: '/api/matcher',
   });
 
   useEffect(() => {
