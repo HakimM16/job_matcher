@@ -114,7 +114,7 @@ export function parseLegacyFormat(jobMatch: string): Partial<ComprehensiveAnalys
     timestamp: new Date(),
     suggestedCareer,
     matchPercentage,
-    skillGaps: skillGapItems.map((skill, index) => ({
+    skillGaps: skillGapItems.map((skill) => ({
       skill: skill.trim(),
       importance: 'Medium' as const,
       timeToLearn: '2-3 months',

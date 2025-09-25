@@ -3,7 +3,6 @@
 import React from 'react';
 import { StrengthsAnalysis } from '@/types/analysis';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card";
-import { Badge } from "../components/ui/badge";
 import styles from '../styles/StrengthsSkills.module.css';
 
 interface StrengthsSkillsProps {
@@ -12,13 +11,6 @@ interface StrengthsSkillsProps {
 }
 
 const StrengthsSkills: React.FC<StrengthsSkillsProps> = ({ strengths, className = "" }) => {
-  const colorMap = {
-    highlightedSkills: "bg-transparent text-transparent bg-clip-text border-0 font-bold text-lg",
-    keyStrengths: "bg-transparent text-transparent bg-clip-text border-0 font-bold text-lg",
-    experienceHighlights: "bg-transparent text-transparent bg-clip-text border-0 font-bold text-lg",
-    softSkills: "bg-transparent text-transparent bg-clip-text border-0 font-bold text-lg",
-    positiveIndicators: "bg-transparent text-transparent bg-clip-text border-0 font-bold text-lg"
-  };
 
   const sections = [
     {

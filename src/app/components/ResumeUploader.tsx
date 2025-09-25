@@ -89,11 +89,6 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading }) => {
     setIsDragOver(true);
   };
 
-  const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
-    event.preventDefault();
-    setIsDragOver(false);
-  };
-
   const handleButtonUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setError('');
     setIsLoading(true);
