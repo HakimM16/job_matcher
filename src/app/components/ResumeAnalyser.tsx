@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import ResumeUploader from './ResumeUploader';
 import JobMatcher from './JobMatcher';
+import ErrorPage from './ErrorPage';
 import styles from '../styles/ResumeAnalyser.module.css';
 import { useCompletion } from 'ai/react';
 import { generateMockAnalysis } from '@/lib/mockData';
@@ -11,25 +12,38 @@ const ResumeAnalyser = () => {
   const [isLoadingResume, setIsLoadingResume] = useState(false);
   const [resumeText, setResumeText] = useState<string>('');
   const [mockMode, setMockMode] = useState(false);
+  const [hasError, setHasError] = useState(false);
+  const [errorType, setErrorType] = useState<'analysis' | 'parsing' | 'network' | 'invalid-document'>('analysis');
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const { completion, isLoading, complete } = useCompletion({
     api: '/api/matcher',
   });
 
   useEffect(() => {
     const getResumeInfo = async (text: string) => {
-      if (mockMode) {
-        // Use mock data for testing
-        setTimeout(() => {
-          setShowInfo(true);
-          setIsLoadingResume(false);
-        }, 1000);
-        return;
-      }
+      try {
+        if (mockMode) {
+          // Use mock data for testing
+          setTimeout(() => {
+            setShowInfo(true);
+            setIsLoadingResume(false);
+            setHasError(false);
+          }, 1000);
+          return;
+        }
 
-      const messageToSend = `RESUME: ${text}\n\n-------\n\n`;
-      await complete(messageToSend);
-      setShowInfo(true);
-      setIsLoadingResume(false);
+        const messageToSend = `RESUME: ${text}\n\n-------\n\n`;
+        await complete(messageToSend);
+        setShowInfo(true);
+        setIsLoadingResume(false);
+        setHasError(false);
+      } catch (error) {
+        console.error('Error in resume analysis:', error);
+        setErrorType('network');
+        setErrorMessage(error instanceof Error ? error.message : 'Unknown error');
+        setHasError(true);
+        setIsLoadingResume(false);
+      }
     };
 
     if (resumeText !== '') {
@@ -45,12 +59,58 @@ const ResumeAnalyser = () => {
     return completion;
   };
 
+  const handleRetry = () => {
+    setHasError(false);
+    setShowInfo(false);
+    setResumeText('');
+    setMockMode(false);
+    setErrorMessage('');
+  };
+
+  const checkForError = (analysisData: string) => {
+    try {
+      // Check if the response contains error indicators
+      if (analysisData.includes('undetermined') || 
+          analysisData.includes('Unable to determine') ||
+          analysisData.includes('Not determined') ||
+          analysisData.includes('error') ||
+          analysisData.includes('failed')) {
+        setErrorType('analysis');
+        setErrorMessage('Could not determine a suitable career path');
+        setHasError(true);
+        return true;
+      }
+      return false;
+    } catch {
+      setErrorType('parsing');
+      setErrorMessage('Could not parse the analysis results');
+      setHasError(true);
+      return true;
+    }
+  };
+
   return (
     <div className={styles.analyzerWrapper}>
-      {!showInfo ? (
+      {hasError ? (
+        <ErrorPage 
+          onRetry={handleRetry}
+          errorType={errorType}
+          errorMessage={errorMessage}
+        />
+      ) : !showInfo ? (
         <div className={styles.uploaderWrapper}>
           <p className={styles.instructionsText}>Upload your resume to see the recommended job.</p>
-          <ResumeUploader setIsLoading={setIsLoadingResume} setResumeText={setResumeText} />
+          <ResumeUploader 
+            setIsLoading={setIsLoadingResume} 
+            setResumeText={setResumeText}
+            onResumeValidation={(isValid, errorMessage) => {
+              if (!isValid) {
+                setErrorType('invalid-document');
+                setErrorMessage(errorMessage || 'Invalid document type');
+                setHasError(true);
+              }
+            }}
+          />
           <br/>
           
           {/* Demo Button */}
@@ -76,13 +136,21 @@ const ResumeAnalyser = () => {
         </div>
       ) : (
         <div>
-          <JobMatcher jobMatch={getCurrentAnalysis()} />
+          <JobMatcher 
+            jobMatch={getCurrentAnalysis()} 
+            onError={(errorType, errorMessage) => {
+              setErrorType(errorType);
+              setErrorMessage(errorMessage);
+              setHasError(true);
+            }}
+          />
           <div className="mt-6 text-center">
             <button
               onClick={() => {
                 setShowInfo(false);
                 setMockMode(false);
                 setResumeText('');
+                setHasError(false);
               }}
               className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm"
             >

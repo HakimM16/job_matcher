@@ -7,9 +7,10 @@ import { MdCloudUpload } from "react-icons/md";
 type Props = {
   setResumeText: React.Dispatch<React.SetStateAction<string>>;
   setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+  onResumeValidation?: (isValid: boolean, errorMessage?: string) => void;
 };
 
-const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading }) => {
+const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResumeValidation }) => {
   const [error, setError] = useState('');
   const [isDragOver, setIsDragOver] = useState(false);
 
@@ -20,6 +21,64 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading }) => {
         return str + (hasEOL ? '\n' : '');
       })
       .join('');
+  };
+
+  const validateResumeContent = (text: string): { isValid: boolean; errorMessage?: string } => {
+    const lowerText = text.toLowerCase();
+    
+    // Resume-related keywords that should be present
+    const resumeKeywords = [
+      'experience', 'education', 'skills', 'work', 'job', 'employment',
+      'career', 'professional', 'qualification', 'degree', 'university',
+      'college', 'certification', 'training', 'project', 'achievement',
+      'responsibility', 'duties', 'position', 'role', 'company',
+      'organization', 'cv', 'resume', 'curriculum vitae'
+    ];
+    
+    // Non-resume keywords that indicate wrong document type
+    const nonResumeKeywords = [
+      'invoice', 'receipt', 'bill', 'payment', 'financial', 'bank statement',
+      'contract', 'agreement', 'terms', 'conditions', 'legal', 'court',
+      'medical', 'prescription', 'diagnosis', 'treatment', 'patient',
+      'recipe', 'cooking', 'food', 'restaurant', 'menu',
+      'manual', 'instruction', 'guide', 'tutorial', 'how to',
+      'academic paper', 'research', 'thesis', 'dissertation',
+      'newsletter', 'magazine', 'article', 'blog', 'post'
+    ];
+    
+    // Check for non-resume content
+    const nonResumeMatches = nonResumeKeywords.filter(keyword => 
+      lowerText.includes(keyword)
+    );
+    
+    if (nonResumeMatches.length >= 3) {
+      return {
+        isValid: false,
+        errorMessage: 'This document doesn\'t appear to be a resume. Please upload a CV or resume document.'
+      };
+    }
+    
+    // Check for resume content
+    const resumeMatches = resumeKeywords.filter(keyword => 
+      lowerText.includes(keyword)
+    );
+    
+    if (resumeMatches.length < 3) {
+      return {
+        isValid: false,
+        errorMessage: 'This document doesn\'t contain enough resume-related content. Please upload a proper CV or resume.'
+      };
+    }
+    
+    // Check minimum length
+    if (text.trim().length < 100) {
+      return {
+        isValid: false,
+        errorMessage: 'The document is too short to be analyzed. Please upload a complete resume.'
+      };
+    }
+    
+    return { isValid: true };
   };
 
   const readResume = async (pdfFile: File | undefined) => {
@@ -38,7 +97,21 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading }) => {
             pdfDoc.getPage(1).then((page) => {
               page.getTextContent().then((textContent) => {
                 const extractedText = mergeTextContent(textContent);
-                setResumeText(extractedText);
+                
+                // Validate the content
+                const validation = validateResumeContent(extractedText);
+                
+                if (validation.isValid) {
+                  setResumeText(extractedText);
+                  if (onResumeValidation) {
+                    onResumeValidation(true);
+                  }
+                } else {
+                  if (onResumeValidation) {
+                    onResumeValidation(false, validation.errorMessage);
+                  }
+                  setIsLoading(false);
+                }
               });
             });
           },

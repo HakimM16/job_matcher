@@ -4,6 +4,7 @@ import Image from 'next/image';
 import ResumeAnalyser from './components/ResumeAnalyser';
 import styles from './styles/Home.module.css';
 import Logo from './logo.png';
+import ErrorPage from './components/ErrorPage';
 
 export default function Home() {
   return (

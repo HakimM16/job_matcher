@@ -23,9 +23,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "../components/ui/tabs"
 
 interface JobMatcherProps {
   jobMatch: string;
+  onError?: (errorType: 'analysis' | 'parsing' | 'network', errorMessage: string) => void;
 }
 
-const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
+const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch, onError }) => {
   const [analysis, setAnalysis] = useState<ComprehensiveAnalysis | null>(null);
   const [activeTab, setActiveTab] = useState('overview');
   const [isLoading, setIsLoading] = useState(true);
@@ -34,20 +35,62 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch }) => {
     if (jobMatch) {
       setIsLoading(true);
       
-      // Try to parse as comprehensive analysis first
-      const comprehensiveAnalysis = parseComprehensiveAnalysis(jobMatch);
-      
-      if (comprehensiveAnalysis) {
-        setAnalysis(comprehensiveAnalysis);
-      } else {
-        // Fallback to legacy format
-        const legacyAnalysis = parseLegacyFormat(jobMatch);
-        setAnalysis(legacyAnalysis as ComprehensiveAnalysis);
+      try {
+        // Check for error indicators in the raw response
+        if (jobMatch.includes('undetermined') || 
+            jobMatch.includes('Unable to determine') ||
+            jobMatch.includes('Not determined') ||
+            jobMatch.toLowerCase().includes('error') ||
+            jobMatch.toLowerCase().includes('failed')) {
+          if (onError) {
+            onError('analysis', 'Could not determine a suitable career path from your resume');
+          }
+          setIsLoading(false);
+          return;
+        }
+        
+        // Try to parse as comprehensive analysis first
+        const comprehensiveAnalysis = parseComprehensiveAnalysis(jobMatch);
+        
+        if (comprehensiveAnalysis) {
+          // Check if the suggested career is undetermined
+          if (comprehensiveAnalysis.suggestedCareer && 
+              (comprehensiveAnalysis.suggestedCareer.toLowerCase().includes('undetermined') ||
+               comprehensiveAnalysis.suggestedCareer.toLowerCase().includes('not determined'))) {
+            if (onError) {
+              onError('analysis', 'Could not determine a suitable career path from your resume');
+            }
+            setIsLoading(false);
+            return;
+          }
+          setAnalysis(comprehensiveAnalysis);
+        } else {
+          // Fallback to legacy format
+          const legacyAnalysis = parseLegacyFormat(jobMatch);
+          
+          // Check if the legacy analysis also has undetermined career
+          if (legacyAnalysis.suggestedCareer && 
+              (legacyAnalysis.suggestedCareer.toLowerCase().includes('undetermined') ||
+               legacyAnalysis.suggestedCareer.toLowerCase().includes('not determined'))) {
+            if (onError) {
+              onError('analysis', 'Could not determine a suitable career path from your resume');
+            }
+            setIsLoading(false);
+            return;
+          }
+          
+          setAnalysis(legacyAnalysis as ComprehensiveAnalysis);
+        }
+      } catch (error) {
+        console.error('Error parsing job match:', error);
+        if (onError) {
+          onError('parsing', 'Could not parse the analysis results');
+        }
       }
       
       setIsLoading(false);
     }
-  }, [jobMatch]);
+  }, [jobMatch, onError]);
 
   if (isLoading) {
     return (
