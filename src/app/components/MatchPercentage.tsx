@@ -173,7 +173,7 @@ const MatchPercentageComponent: React.FC<MatchPercentageProps> = ({
             {matchPercentage.overall >= 70 && (
               <div className={styles.tipItem}>
                 <span className={styles.tipBullet}>✓</span>
-                <span className={styles.tipText}>You're in great shape! Focus on polishing your resume and portfolio</span>
+                <span className={styles.tipText}>You&apos;re in great shape! Focus on polishing your resume and portfolio</span>
               </div>
             )}
           </div>

@@ -63,7 +63,7 @@ const StrengthsSkills: React.FC<StrengthsSkillsProps> = ({ strengths, className 
           <CardTitle className={styles.title}>Your Strengths & Skills</CardTitle>
         </div>
         <CardDescription className={styles.description}>
-          🎉 We found {totalStrengths} awesome things about your profile! Here's what makes you shine:
+          🎉 We found {totalStrengths} awesome things about your profile! Here&apos;s what makes you shine:
         </CardDescription>
       </CardHeader>
       
