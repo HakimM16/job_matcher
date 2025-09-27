@@ -1,13 +1,58 @@
+.analyzerWrapper {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
 .uploaderWrapper {
   margin: auto;
-  padding-bottom: 200px;
+  padding-bottom: 100px;
+  max-width: 600px;
 }
 
 .instructionsText {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 300;
   margin-top: 15px;
   margin-bottom: 20px;
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  .analyzerWrapper {
+    padding: 0 8px;
+  }
+
+  .uploaderWrapper {
+    padding-bottom: 60px;
+  }
+
+  .instructionsText {
+    font-size: 16px;
+    margin-top: 10px;
+    margin-bottom: 16px;
+    padding: 0 8px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .analyzerWrapper {
+    padding: 0 4px;
+  }
+
+  .uploaderWrapper {
+    padding-bottom: 40px;
+  }
+
+  .instructionsText {
+    font-size: 14px;
+    margin-top: 8px;
+    margin-bottom: 12px;
+    padding: 0 4px;
+  }
 }
 
 .errorMessage {

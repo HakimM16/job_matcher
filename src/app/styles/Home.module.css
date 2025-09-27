@@ -53,8 +53,57 @@
   text-decoration: underline;
 }
 
+/* Mobile Responsiveness */
 @media screen and (max-width: 768px) {
   .container {
-    margin: 0 20px;
+    margin: 0 16px;
+    max-width: 100%;
+    padding: 0 8px;
+  }
+
+  .logoBox {
+    padding-top: 20px;
+  }
+
+  .logoBox img {
+    max-width: 280px;
+    height: auto;
+  }
+
+  .centeredContent {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    gap: 20px;
+  }
+
+  .footer {
+    padding: 16px;
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    margin: 0 8px;
+    padding: 0 4px;
+  }
+
+  .logoBox {
+    padding-top: 16px;
+  }
+
+  .logoBox img {
+    max-width: 240px;
+  }
+
+  .centeredContent {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    gap: 16px;
+  }
+
+  .footer {
+    padding: 12px;
+    font-size: 12px;
   }
 }

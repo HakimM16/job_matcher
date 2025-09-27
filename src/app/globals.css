@@ -29,6 +29,43 @@
 /* Override app background color */
 body {
   background-color: #282c34;
+  overflow-x: hidden; /* Prevent horizontal scrolling */
+}
+
+/* Ensure proper mobile touch targets */
+button, input, select, textarea {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Improve text rendering on mobile */
+body {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Mobile-specific improvements */
+@media screen and (max-width: 768px) {
+  /* Prevent zoom on input focus */
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="search"],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+
+  /* Improve touch targets */
+  button, a, input, select, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Better scrolling on mobile */
+  * {
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
 .App {

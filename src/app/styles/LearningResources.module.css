@@ -482,3 +482,109 @@
   flex-direction: column;
   gap: 1rem;
 }
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  .resourceItem {
+    padding: 0.75rem;
+  }
+
+  .resourceHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .resourceTitleRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+
+  .resourceDetails {
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .filterButtons {
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .filterButton {
+    padding: 0.375rem 0.75rem;
+    font-size: 0.875rem;
+    min-height: 44px;
+  }
+
+  .difficultyButtons {
+    flex-direction: column;
+    gap: 0.375rem;
+  }
+
+  .badge {
+    font-size: 0.875rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .badgeCourse,
+  .badgeCertification,
+  .badgeTutorial,
+  .badgeBook,
+  .badgeDocumentation,
+  .badgeDifficultyBeginner,
+  .badgeDifficultyIntermediate,
+  .badgeDifficultyAdvanced,
+  .badgeCostFree,
+  .badgeCostFreemium,
+  .badgeCostPaid,
+  .badgeOutline {
+    font-size: 0.875rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .ctaButton {
+    min-height: 44px;
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .resourceItem {
+    padding: 0.5rem;
+  }
+
+  .resourceDescription {
+    font-size: 0.8125rem;
+  }
+
+  .resourceProvider {
+    font-size: 0.6875rem;
+  }
+
+  .filterButton {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+
+  .badge {
+    font-size: 0.75rem;
+    padding: 0.1875rem 0.375rem;
+  }
+
+  .badgeCourse,
+  .badgeCertification,
+  .badgeTutorial,
+  .badgeBook,
+  .badgeDocumentation,
+  .badgeDifficultyBeginner,
+  .badgeDifficultyIntermediate,
+  .badgeDifficultyAdvanced,
+  .badgeCostFree,
+  .badgeCostFreemium,
+  .badgeCostPaid,
+  .badgeOutline {
+    font-size: 0.75rem;
+    padding: 0.1875rem 0.375rem;
+  }
+}

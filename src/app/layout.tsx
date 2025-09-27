@@ -7,6 +7,7 @@ import { Analytics } from '@vercel/analytics/react';
 export const metadata: Metadata = {
   title: 'Job Matcher',
   description: 'Find your perfect job match with AI-powered recommendations tailored to your skills and preferences.',
+  viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
 }
 
 const fontSans = FontSans({
@@ -21,6 +22,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+      </head>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",

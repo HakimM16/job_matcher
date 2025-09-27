@@ -314,22 +314,167 @@
   color: #ea580c;
 }
 
-/* Responsive Design */
-@media (max-width: 640px) {
-  .workPreferencesGrid {
-    grid-template-columns: 1fr;
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  .culturalFitTitle {
+    font-size: 1.25rem;
   }
-  
-  .environmentRecommendationsContent {
-    font-size: 0.8rem;
+
+  .culturalFitDescription {
+    font-size: 0.875rem;
   }
-  
+
   .bestEnvironmentScore {
     font-size: 1.5rem;
   }
-  
+
   .bestEnvironmentTitle {
     font-size: 1.125rem;
+  }
+
+  .bestEnvironmentDescription {
+    font-size: 0.75rem;
+  }
+
+  .environmentScoresTitle {
+    font-size: 1.125rem;
+  }
+
+  .environmentScoreName {
+    font-size: 0.875rem;
+  }
+
+  .environmentScoreValue {
+    font-size: 0.75rem;
+  }
+
+  .workPreferencesGrid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .workPreferencesTitle {
+    font-size: 0.875rem;
+  }
+
+  .workPreferenceItem {
+    font-size: 1rem;
+  }
+
+  .personalityTraitsTitle {
+    font-size: 0.875rem;
+  }
+
+  .personalityTraitBadge {
+    font-size: 0.6875rem;
+    padding: 0.1875rem 0.375rem;
+  }
+
+  .environmentRecommendations {
+    margin-top: 1.5rem;
+    padding: 1rem;
+  }
+
+  .environmentRecommendationsTitle {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .environmentRecommendationsContent {
+    font-size: 0.875rem;
+    gap: 0.75rem;
+  }
+
+  .environmentRecommendationItem {
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .environmentRecommendationBullet {
+    font-size: 1rem;
+  }
+
+  .companySizeRecommendationText {
+    font-size: 0.875rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .culturalFitTitle {
+    font-size: 1rem;
+  }
+
+  .culturalFitDescription {
+    font-size: 0.75rem;
+  }
+
+  .bestEnvironmentScore {
+    font-size: 1.25rem;
+  }
+
+  .bestEnvironmentTitle {
+    font-size: 1rem;
+  }
+
+  .bestEnvironmentDescription {
+    font-size: 0.6875rem;
+  }
+
+  .environmentScoresTitle {
+    font-size: 1rem;
+  }
+
+  .environmentScoreName {
+    font-size: 0.75rem;
+  }
+
+  .environmentScoreValue {
+    font-size: 0.6875rem;
+  }
+
+  .workPreferencesTitle {
+    font-size: 0.75rem;
+  }
+
+  .workPreferenceItem {
+    font-size: 0.875rem;
+  }
+
+  .personalityTraitsTitle {
+    font-size: 0.75rem;
+  }
+
+  .personalityTraitBadge {
+    font-size: 0.625rem;
+    padding: 0.125rem 0.25rem;
+  }
+
+  .environmentRecommendations {
+    margin-top: 1rem;
+    padding: 0.75rem;
+  }
+
+  .environmentRecommendationsTitle {
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .environmentRecommendationsContent {
+    font-size: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .environmentRecommendationItem {
+    padding: 0.375rem;
+    gap: 0.375rem;
+  }
+
+  .environmentRecommendationBullet {
+    font-size: 0.875rem;
+  }
+
+  .companySizeRecommendationText {
+    font-size: 0.75rem;
   }
 }
 

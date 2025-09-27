@@ -35,7 +35,7 @@ interface TabsListProps {
 const TabsList: React.FC<TabsListProps> = ({ children, className }) => {
   return (
     <div className={cn(
-      "inline-flex h-10 items-center justify-center rounded-md bg-transparent p-1 text-gray-300 gap-1",
+      "inline-flex h-auto items-center justify-center rounded-md bg-transparent p-1 text-gray-300 gap-1 flex-wrap",
       className
     )}>
       {children}
@@ -60,10 +60,10 @@ const TabsTrigger: React.FC<TabsTriggerProps> = ({ value, children, className })
     <button
       onClick={() => onValueChange(value)}
       className={cn(
-        "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-3 py-1.5 text-sm font-weight-700 ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/40 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+        "inline-flex items-center justify-center whitespace-nowrap rounded-sm px-2 py-2 text-xs sm:text-sm font-weight-700 ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-400/40 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 min-h-[44px] min-w-[80px]",
         isActive 
-          ? "text-[#e08317] font-extrabold" 
-          : "text-gray-300 hover:text-[#e08317] hover:font-extrabold",
+          ? "text-[#e08317] font-extrabold bg-gray-700/50" 
+          : "text-gray-300 hover:text-[#e08317] hover:font-extrabold hover:bg-gray-700/30",
         className
       )}
     >

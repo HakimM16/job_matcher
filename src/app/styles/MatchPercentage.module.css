@@ -48,6 +48,21 @@
   margin: 0 auto;
 }
 
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  .scoreCircle {
+    width: 6rem;
+    height: 6rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .scoreCircle {
+    width: 5rem;
+    height: 5rem;
+  }
+}
+
 .backgroundCircle {
   position: absolute;
   inset: 0;
@@ -79,6 +94,27 @@
 .scoreLabel {
   font-size: 0.75rem;
   color: #f3e8ff;
+}
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  .scoreValue {
+    font-size: 1.5rem;
+  }
+
+  .scoreLabel {
+    font-size: 0.625rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .scoreValue {
+    font-size: 1.25rem;
+  }
+
+  .scoreLabel {
+    font-size: 0.5rem;
+  }
 }
 
 .scoreMessage {

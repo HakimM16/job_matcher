@@ -123,14 +123,14 @@ const JobMatcher: React.FC<JobMatcherProps> = ({ jobMatch, onError }) => {
 
       {/* Tabbed Interface */}
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="flex flex-wrap justify-center gap-2 mb-8">
-          <TabsTrigger value="overview" className="flex-1 min-w-[120px]">📊 Overview</TabsTrigger>
-          <TabsTrigger value="strengths" className="flex-1 min-w-[120px]">💪 Strengths</TabsTrigger>
-          <TabsTrigger value="market" className="flex-1 min-w-[120px]">📈 Market</TabsTrigger>
-          <TabsTrigger value="resources" className="flex-1 min-w-[120px]">📚 Learn</TabsTrigger>
-          <TabsTrigger value="companies" className="flex-1 min-w-[120px]">🏢 Companies</TabsTrigger>
-          <TabsTrigger value="culture" className="flex-1 min-w-[120px]">🎯 Culture</TabsTrigger>
-          <TabsTrigger value="action" className="flex-1 min-w-[120px]">🚀 Action Plan</TabsTrigger>
+        <TabsList className="flex flex-wrap justify-center gap-1 mb-6 p-1 bg-gray-800 rounded-lg">
+          <TabsTrigger value="overview" className="flex-1 min-w-[100px] text-xs sm:text-sm px-2 py-2">📊 Overview</TabsTrigger>
+          <TabsTrigger value="strengths" className="flex-1 min-w-[100px] text-xs sm:text-sm px-2 py-2">💪 Strengths</TabsTrigger>
+          <TabsTrigger value="market" className="flex-1 min-w-[100px] text-xs sm:text-sm px-2 py-2">📈 Market</TabsTrigger>
+          <TabsTrigger value="resources" className="flex-1 min-w-[100px] text-xs sm:text-sm px-2 py-2">📚 Learn</TabsTrigger>
+          <TabsTrigger value="companies" className="flex-1 min-w-[100px] text-xs sm:text-sm px-2 py-2">🏢 Companies</TabsTrigger>
+          <TabsTrigger value="culture" className="flex-1 min-w-[100px] text-xs sm:text-sm px-2 py-2">🎯 Culture</TabsTrigger>
+          <TabsTrigger value="action" className="flex-1 min-w-[100px] text-xs sm:text-sm px-2 py-2">🚀 Action</TabsTrigger>
         </TabsList>
         <br/>
 
