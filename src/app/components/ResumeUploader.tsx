@@ -28,7 +28,7 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResume
     if (!text || text.trim().length === 0) {
       return {
         isValid: false,
-        errorMessage: 'No text content found in the document. Please ensure the PDF contains readable text.'
+        errorMessage: 'Invalid document - No text content found in the document. Please ensure the PDF contains readable text.'
       };
     }
 
@@ -59,12 +59,12 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResume
       'medication', 'doctor note',
       'ingredients list', 'cooking time', 'serves', 'preparation time',
       'invoice number', 'shipping address', 'billing address', 'purchase order',
-      'statement of account', 'transaction', 'credit card', 'debit card',
+      'statement of account', 'credit card', 'debit card',
       'insurance policy', 'claim', 'policy number', 'coverage',
       'prescription number', 'pharmacy', 'dosage', 'refill',
       'menu item', 'appetizer', 'main course', 'dessert', 'beverage',
       'table of contents', 'chapter', 'section', 'appendix', 'reference',
-      'abstract', 'introduction', 'methodology', 'results', 'discussion',
+      'abstract', 'introduction', 'results', 'discussion',
       'conclusion', 'bibliography', 'citation', 'footnote',
       'newsletter subscription', 'editorial', 'advertisement',
       'press release', 'event invitation', 'wedding invitation',
@@ -75,7 +75,7 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResume
       'income statement', 'profit and loss', 'tax return', 'tax form',
       'utility bill', 'electricity bill', 'water bill', 'gas bill',
       'lease agreement', 'rental agreement', 'mortgage', 'deed',
-      'passport', 'visa', 'boarding pass', 'itinerary', 'travel plan',
+      'passport', 'visa', 'boarding pass', 'travel plan',
       'flight ticket', 'hotel reservation', 'booking confirmation'
     ];
     
@@ -89,7 +89,7 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResume
     if (nonResumeMatches.length >= 3) {
       return {
         isValid: false,
-        errorMessage: `This document appears to be a ${nonResumeMatches[0]} document, not a resume. Please upload a CV or resume document.`
+        errorMessage: `Invalid document - This document appears to be a ${nonResumeMatches[0]} document, not a resume. Please upload a CV or resume document.`
       };
     }
     
@@ -103,7 +103,7 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResume
     if (resumeMatches.length < 3) {
       return {
         isValid: false,
-        errorMessage: 'This document doesn\'t contain enough resume-related content. Please upload a proper CV or resume with your work experience, education, and skills.'
+        errorMessage: 'Invalid document - This document doesn\'t contain enough resume-related content. Please upload a proper CV or resume with your work experience, education, and skills.'
       };
     }
     
@@ -111,7 +111,7 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResume
     if (text.trim().length < 100) {
       return {
         isValid: false,
-        errorMessage: 'The document is too short to be analyzed. Please upload a complete resume.'
+        errorMessage: 'Invalid document - The document is too short to be analyzed. Please upload a complete resume.'
       };
     }
     
@@ -123,7 +123,42 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResume
     if (!hasExperience && !hasEducation && !hasSkills) {
       return {
         isValid: false,
-        errorMessage: 'This document doesn\'t appear to contain typical resume sections (experience, education, or skills). Please upload a proper CV or resume.'
+        errorMessage: 'Invalid document - This document doesn\'t appear to contain typical resume sections (experience, education, or skills). Please upload a proper CV or resume.'
+      };
+    }
+
+    // Check for gibberish or corrupted text
+    const wordsCount = text.trim().split(/\s+/).length;
+    const avgWordLength = text.trim().replace(/\s/g, '').length / wordsCount;
+    
+    if (avgWordLength > 15 || wordsCount < 20) {
+      return {
+        isValid: false,
+        errorMessage: 'Invalid document - The document appears to contain corrupted or unreadable text. Please ensure the PDF is not damaged and contains proper text content.'
+      };
+    }
+
+    // Check for excessive special characters (might indicate OCR issues)
+    const specialCharCount = (text.match(/[^a-zA-Z0-9\s.,;:!?()-]/g) || []).length;
+    const specialCharRatio = specialCharCount / text.length;
+    
+    if (specialCharRatio > 0.3) {
+      return {
+        isValid: false,
+        errorMessage: 'Invalid document - The document contains too many unreadable characters. Please ensure the PDF contains clear, readable text.'
+      };
+    }
+
+    // Check for language consistency (basic English check)
+    const commonEnglishWords = ['the', 'and', 'to', 'of', 'a', 'in', 'for', 'is', 'on', 'that', 'by', 'this', 'with', 'i', 'you', 'it', 'not', 'or', 'be', 'are'];
+    const englishWordMatches = commonEnglishWords.filter(word => 
+      lowerText.includes(` ${word} `) || lowerText.startsWith(`${word} `) || lowerText.endsWith(` ${word}`)
+    );
+    
+    if (englishWordMatches.length < 5) {
+      return {
+        isValid: false,
+        errorMessage: 'Invalid document - The document doesn\'t appear to be in English or contains mostly unrecognizable text. Please upload an English CV or resume.'
       };
     }
     
@@ -162,6 +197,7 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResume
                   }
                 } else {
                   console.log('Document validation failed:', validation.errorMessage);
+                  setError(validation.errorMessage || 'Invalid document');
                   if (onResumeValidation) {
                     onResumeValidation(false, validation.errorMessage);
                   }
@@ -169,24 +205,30 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResume
                 }
               }).catch((error) => {
                 console.error('Error extracting text from PDF:', error);
+                const errorMessage = 'Invalid document - Failed to extract text from PDF. The document might be corrupted or password-protected.';
+                setError(errorMessage);
                 setIsLoading(false);
                 if (onResumeValidation) {
-                  onResumeValidation(false, 'Failed to extract text from PDF. The document might be corrupted or password-protected.');
+                  onResumeValidation(false, errorMessage);
                 }
               });
             }).catch((error) => {
               console.error('Error getting PDF page:', error);
+              const errorMessage = 'Invalid document - Failed to process PDF page. The document might be corrupted.';
+              setError(errorMessage);
               setIsLoading(false);
               if (onResumeValidation) {
-                onResumeValidation(false, 'Failed to process PDF page. The document might be corrupted.');
+                onResumeValidation(false, errorMessage);
               }
             });
           },
           (reason) => {
             console.error(`Error during PDF loading: ${reason}`);
+            const errorMessage = 'Invalid document - Failed to load PDF document. Please ensure the file is not corrupted.';
+            setError(errorMessage);
             setIsLoading(false);
             if (onResumeValidation) {
-              onResumeValidation(false, 'Failed to load PDF document. Please ensure the file is not corrupted.');
+              onResumeValidation(false, errorMessage);
             }
           }
         );
@@ -200,26 +242,29 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResume
     setResumeText('');
     setError('');
     setIsLoading(true);
+    setIsDragOver(false);
 
     try {
       const items = event.dataTransfer.items;
 
       if (!items || items.length !== 1) {
-        throw new Error('Please drop a single file.');
+        throw new Error('Invalid document - Please drop a single file.');
       }
       const item = items[0];
 
       if (item.kind !== 'file' || item.type !== 'application/pdf') {
-        throw new Error('Please drop a single PDF file.');
+        throw new Error('Invalid document - Please drop a single PDF file.');
       }
       const file = item.getAsFile();
 
       if (!file) {
-        throw new Error("The PDF wasn't uploaded correctly.");
+        throw new Error('Invalid document - The PDF wasn\'t uploaded correctly.');
       }
       await readResume(file);
-    } catch {
-      setError('There was an error reading the resume. Please try again.');
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Invalid document - There was an error reading the resume. Please try again.';
+      setError(errorMessage);
+      setIsLoading(false);
     }
   };
 
@@ -233,6 +278,11 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResume
     setIsDragOver(true);
   };
 
+  const handleDragLeave = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setIsDragOver(false);
+  };
+
   const handleButtonUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
     setError('');
     setIsLoading(true);
@@ -241,13 +291,15 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResume
     try {
       const file = event.target.files?.[0];
       if (!file) {
-        setError("The PDF wasn't uploaded correctly.");
+        setError('Invalid document - The PDF wasn\'t uploaded correctly.');
         setIsLoading(false);
         return;
       }
       await readResume(file);
-    } catch {
-      setError('There was an error reading the resume. Please try again.');
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Invalid document - There was an error reading the resume. Please try again.';
+      setError(errorMessage);
+      setIsLoading(false);
     }
   };
 
@@ -258,6 +310,7 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResume
         onDrop={(e: React.DragEvent<HTMLDivElement>) => handleDrop(e)}
         onDragOver={(e: React.DragEvent<HTMLDivElement>) => handleDragOver(e)}
         onDragEnter={(e: React.DragEvent<HTMLDivElement>) => handleDragEnter(e)}
+        onDragLeave={(e: React.DragEvent<HTMLDivElement>) => handleDragLeave(e)}
       >
         <input
           type="file"
