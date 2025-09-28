@@ -27,13 +27,7 @@ export async function POST(req: Request) {
 
     const mistral = getMistralClient();
     
-    // Add timeout to prevent hanging requests
-    const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Mistral API request timeout')), 30000); // 30 second timeout
-    });
-    
-    const response = await Promise.race([
-      mistral.chatStream({
+    const response = await mistral.chatStream({
     model: 'open-mistral-7b',
     messages: [{ 
       role: 'user',
@@ -283,9 +277,8 @@ OUTPUT FORMAT (STRICT JSON - CALCULATE ALL VALUES BASED ON ACTUAL CV ANALYSIS):
     "Attend networking events"
   ]
 }`
-    }]),
-      timeoutPromise
-    ]);
+    }]
+  });
   
 //   console.log('Mistral response received:', !!response);
 //   console.log('Response type:', typeof response);
