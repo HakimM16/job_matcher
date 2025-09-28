@@ -2,9 +2,15 @@
 import MistralClient from '@mistralai/mistralai';
 import { MistralStream, StreamingTextResponse } from 'ai';
  
-const mistral = new MistralClient(process.env.MISTRAL_API_KEY || '');
- 
 export const runtime = 'edge';
+
+// Initialize Mistral client inside the function to avoid edge runtime issues
+const getMistralClient = () => {
+  if (!process.env.MISTRAL_API_KEY) {
+    throw new Error('MISTRAL_API_KEY not found in environment variables');
+  }
+  return new MistralClient(process.env.MISTRAL_API_KEY);
+};
  
 export async function POST(req: Request) {
   try {
@@ -19,12 +25,15 @@ export async function POST(req: Request) {
       return new Response('No prompt provided', { status: 400 });
     }
 
-    if (!process.env.MISTRAL_API_KEY) {
-      console.error('MISTRAL_API_KEY not found in environment variables');
-      return new Response('API key not configured', { status: 500 });
-    }
- 
-    const response = await mistral.chatStream({
+    const mistral = getMistralClient();
+    
+    // Add timeout to prevent hanging requests
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('Mistral API request timeout')), 30000); // 30 second timeout
+    });
+    
+    const response = await Promise.race([
+      mistral.chatStream({
     model: 'open-mistral-7b',
     messages: [{ 
       role: 'user',
@@ -274,8 +283,9 @@ OUTPUT FORMAT (STRICT JSON - CALCULATE ALL VALUES BASED ON ACTUAL CV ANALYSIS):
     "Attend networking events"
   ]
 }`
-    }],
-  });
+    }]),
+      timeoutPromise
+    ]);
   
 //   console.log('Mistral response received:', !!response);
 //   console.log('Response type:', typeof response);
@@ -286,11 +296,21 @@ OUTPUT FORMAT (STRICT JSON - CALCULATE ALL VALUES BASED ON ACTUAL CV ANALYSIS):
   }
  
   const stream = MistralStream(response);
-  //console.log('Stream created:', !!stream);
- 
+  console.log('Stream created:', !!stream);
+
+  if (!stream) {
+    console.error('Failed to create stream from Mistral response');
+    return new Response('Failed to create stream', { status: 500 });
+  }
+
   return new StreamingTextResponse(stream);
   } catch (error) {
     console.error('Error in API route:', error);
-    return new Response('Internal server error', { status: 500 });
+    console.error('Error details:', {
+      message: error instanceof Error ? error.message : 'Unknown error',
+      stack: error instanceof Error ? error.stack : undefined,
+      name: error instanceof Error ? error.name : undefined
+    });
+    return new Response(`Internal server error: ${error instanceof Error ? error.message : 'Unknown error'}`, { status: 500 });
   }
 }
