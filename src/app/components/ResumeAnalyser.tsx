@@ -15,15 +15,8 @@ const ResumeAnalyser = () => {
   const [hasError, setHasError] = useState(false);
   const [errorType, setErrorType] = useState<'analysis' | 'parsing' | 'network' | 'invalid-document'>('analysis');
   const [errorMessage, setErrorMessage] = useState<string>('');
-  const { completion, isLoading, complete, error } = useCompletion({
+  const { completion, isLoading, complete } = useCompletion({
     api: '/api/matcher',
-    onError: (error) => {
-      console.error('useCompletion error:', error);
-      setErrorType('network');
-      setErrorMessage(error.message || 'Unknown error');
-      setHasError(true);
-      setIsLoadingResume(false);
-    },
   });
 
   useEffect(() => {
@@ -40,9 +33,7 @@ const ResumeAnalyser = () => {
         }
 
         const messageToSend = `RESUME: ${text}\n\n-------\n\n`;
-        console.log('Sending message to API:', messageToSend.substring(0, 100) + '...');
         await complete(messageToSend);
-        console.log('Completion finished, completion length:', completion?.length || 0);
         setShowInfo(true);
         setIsLoadingResume(false);
         setHasError(false);
@@ -56,13 +47,7 @@ const ResumeAnalyser = () => {
     };
 
     if (resumeText !== '') {
-      getResumeInfo(resumeText).catch((error) => {
-        console.error('Error in getResumeInfo:', error);
-        setErrorType('network');
-        setErrorMessage(error instanceof Error ? error.message : 'Unknown error');
-        setHasError(true);
-        setIsLoadingResume(false);
-      });
+      getResumeInfo(resumeText).then();
     }
   }, [resumeText, mockMode, complete]);
 
