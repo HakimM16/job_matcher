@@ -3,6 +3,17 @@
 
 A AI-powered career analysis platform that helps users analyse their CVs to identify skill gaps, predict salaries, suggest an optimum career path and provide personalised action plans for career development.
 
+## 🖼️ Screenshot
+
+![Job Matching Platform Screenshot](./screenshot.png)
+
+
+## 🌐 Demo & Live Site
+
+- **🎥 Recording:** [Watch the demo recording](https://www.loom.com/share/8caad20c11db4f22882d23d492ae3e47?sid=cc866cbb-fba4-433d-b5e8-8b8c4ce6d263)
+- **🚀 Live Website:** [Visit the Job Matching Platform](https://job-matcher-bay.vercel.app)
+
+
 ## 🚀 Features
 
 ### Core Analysis
@@ -186,6 +197,12 @@ The application is optimized for deployment on Vercel:
 - **Edge Runtime**: API routes use edge runtime for performance
 - **Static Generation**: Optimized for production builds
 - **Environment Variables**: Secure API key management
+
+
+## ❓ Issues & Support
+
+If you encounter any issues, have questions, or need support, feel free to reach out to me directly on [LinkedIn](https://www.linkedin.com/in/hakim-mabike-643848214). I'm happy to help!
+
 
 ## 👨‍💻 Author
 
