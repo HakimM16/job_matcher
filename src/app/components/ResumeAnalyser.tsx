@@ -146,7 +146,7 @@ const ResumeAnalyser = () => {
               setHasError(true);
             }}
           />
-          <div className="mt-6 text-center">
+          <div className="mt-6 text-center cursor-pointer">
             <button
               onClick={() => {
                 setShowInfo(false);
@@ -154,7 +154,7 @@ const ResumeAnalyser = () => {
                 setResumeText('');
                 setHasError(false);
               }}
-              className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm"
+              className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm cursor-pointer"
             >
               ← Analyse Another Resume
             </button>

@@ -86,7 +86,7 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResume
     
     console.log('Non-resume keyword matches:', nonResumeMatches);
     
-    if (nonResumeMatches.length >= 3) {
+    if (nonResumeMatches.length >= 5) {
       return {
         isValid: false,
         errorMessage: `Invalid document - This document appears to be a ${nonResumeMatches[0]} document, not a resume. Please upload a CV or resume document.`
@@ -131,7 +131,7 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResume
     const wordsCount = text.trim().split(/\s+/).length;
     const avgWordLength = text.trim().replace(/\s/g, '').length / wordsCount;
     
-    if (avgWordLength > 15 || wordsCount < 20) {
+    if (avgWordLength > 15 || wordsCount < 40) {
       return {
         isValid: false,
         errorMessage: 'Invalid document - The document appears to contain corrupted or unreadable text. Please ensure the PDF is not damaged and contains proper text content.'
@@ -149,18 +149,18 @@ const ResumeUploader: React.FC<Props> = ({ setResumeText, setIsLoading, onResume
       };
     }
 
-    // Check for language consistency (basic English check)
-    const commonEnglishWords = ['the', 'and', 'to', 'of', 'a', 'in', 'for', 'is', 'on', 'that', 'by', 'this', 'with', 'i', 'you', 'it', 'not', 'or', 'be', 'are'];
-    const englishWordMatches = commonEnglishWords.filter(word => 
-      lowerText.includes(` ${word} `) || lowerText.startsWith(`${word} `) || lowerText.endsWith(` ${word}`)
-    );
+    // // Check for language consistency (basic English check)
+    // const commonEnglishWords = ['the', 'and', 'to', 'of', 'a', 'in', 'for', 'is', 'on', 'that', 'by', 'this', 'with', 'i', 'you', 'it', 'not', 'or', 'be', 'are'];
+    // const englishWordMatches = commonEnglishWords.filter(word => 
+    //   lowerText.includes(` ${word} `) || lowerText.startsWith(`${word} `) || lowerText.endsWith(` ${word}`)
+    // );
     
-    if (englishWordMatches.length < 5) {
-      return {
-        isValid: false,
-        errorMessage: 'Invalid document - The document doesn\'t appear to be in English or contains mostly unrecognizable text. Please upload an English CV or resume.'
-      };
-    }
+    // if (englishWordMatches.length < 100) {
+    //   return {
+    //     isValid: false,
+    //     errorMessage: `Invalid document - ${englishWordMatches.length} The document doesn't appear to be in English or contains mostly unrecognizable text. Please upload an English CV or resume.`
+    //   };
+    // }
     
     console.log('Document validation passed');
     return { isValid: true };

@@ -89,6 +89,7 @@ const CulturalFit: React.FC<CulturalFitProps> = ({ culturalFit, className = "" }
             </div>
           ))}
         </div>
+        <br />
 
         {/* Work Preferences */}
         <div className={styles.workPreferencesGrid}>
