@@ -62,24 +62,24 @@ export function parseLegacyFormat(jobMatch: string): Partial<ComprehensiveAnalys
 
   // Calculate more realistic percentages based on content analysis
   const calculateRealisticPercentages = (career: string, skillGap: string, salaryPredictions: string) => {
-    let technical = 60;
-    let experience = 55;
-    let education = 70;
+    let technical = 45;
+    let experience = 40;
+    let education = 65;
     
     // Adjust based on career type
     if (career.toLowerCase().includes('senior') || career.toLowerCase().includes('lead')) {
-      technical += 15;
-      experience += 20;
+      technical += 20;
+      experience += 25;
     } else if (career.toLowerCase().includes('junior') || career.toLowerCase().includes('entry')) {
-      technical -= 10;
-      experience -= 15;
+      technical -= 5;
+      experience -= 10;
     }
     
     // Adjust based on skill gap content
     if (skillGap.includes('advanced') || skillGap.includes('expert')) {
-      technical += 10;
+      technical += 15;
     } else if (skillGap.includes('beginner') || skillGap.includes('basic')) {
-      technical -= 15;
+      technical -= 10;
     }
     
     // Adjust based on salary predictions (higher salaries = more experience expected)
@@ -88,20 +88,20 @@ export function parseLegacyFormat(jobMatch: string): Partial<ComprehensiveAnalys
       const salaries = salaryMatch.map(s => parseInt(s.replace('£', '')));
       const avgSalary = salaries.reduce((a, b) => a + b, 0) / salaries.length;
       if (avgSalary > 60000) {
-        experience += 10;
-        technical += 5;
+        experience += 15;
+        technical += 8;
       } else if (avgSalary < 30000) {
-        experience -= 10;
-        technical -= 5;
+        experience -= 8;
+        technical -= 3;
       }
     }
     
     // Add some randomness to make it feel more realistic
-    const randomVariation = () => Math.floor(Math.random() * 10) - 5; // -5 to +5
+    const randomVariation = () => Math.floor(Math.random() * 8) - 4; // -4 to +4
     
-    technical = Math.max(30, Math.min(95, technical + randomVariation()));
-    experience = Math.max(25, Math.min(90, experience + randomVariation()));
-    education = Math.max(40, Math.min(95, education + randomVariation()));
+    technical = Math.max(25, Math.min(90, technical + randomVariation()));
+    experience = Math.max(20, Math.min(85, experience + randomVariation()));
+    education = Math.max(35, Math.min(90, education + randomVariation()));
     
     const overall = Math.round((technical + experience + education) / 3);
     
@@ -137,11 +137,11 @@ export function parseLegacyFormat(jobMatch: string): Partial<ComprehensiveAnalys
       positiveIndicators: []
     },
     jobMarket: {
-      demandScore: 75,
-      growthRate: 10,
+      demandScore: 65,
+      growthRate: 8,
       trend: 'Growing' as const,
-      competitionLevel: 'Medium' as const,
-      remoteOpportunities: 60,
+      competitionLevel: 'High' as const,
+      remoteOpportunities: 45,
       marketInsights: []
     },
     topCompanies: [],
@@ -156,10 +156,10 @@ export function parseLegacyFormat(jobMatch: string): Partial<ComprehensiveAnalys
       riskTolerance: 'Medium' as const,
       personalityTraits: [],
       culturalFitScores: {
-        startup: 60,
-        corporate: 70,
-        agency: 65,
-        nonprofit: 50
+        startup: 45,
+        corporate: 55,
+        agency: 50,
+        nonprofit: 40
       }
     },
     alternativeCareers: [],
@@ -175,12 +175,12 @@ export function parseLegacyFormat(jobMatch: string): Partial<ComprehensiveAnalys
       }
     },
     resumeFeedback: {
-      overallScore: 75,
-      clarity: { score: 80, suggestions: [] },
-      keywordOptimization: { score: 70, missingKeywords: [], suggestions: [] },
-      formatting: { score: 85, issues: [], improvements: [] },
-      content: { score: 75, strengths: [], weaknesses: [], suggestions: [] },
-      atsCompatibility: { score: 80, issues: [], improvements: [] }
+      overallScore: 65,
+      clarity: { score: 70, suggestions: [] },
+      keywordOptimization: { score: 55, missingKeywords: [], suggestions: [] },
+      formatting: { score: 75, issues: [], improvements: [] },
+      content: { score: 60, strengths: [], weaknesses: [], suggestions: [] },
+      atsCompatibility: { score: 65, issues: [], improvements: [] }
     },
     networkingOpportunities: [],
     actionPlan: {
@@ -196,7 +196,7 @@ export function parseLegacyFormat(jobMatch: string): Partial<ComprehensiveAnalys
       xpToNextLevel: 1000,
       badges: [],
       achievements: [],
-      careerReadinessLevel: 50,
+      careerReadinessLevel: 35,
       weeklyProgress: {
         skillsLearned: 0,
         projectsCompleted: 0,
